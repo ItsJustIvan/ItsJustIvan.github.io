@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sort Without Articles</title>
+</head>
+<body>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: url("https://source.unsplash.com/nDqA4d5NL0k/2000x2000");
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #list, .add-items {
+      list-style: inside square;
+      font-size: 20px;
+      background: white;
+      width: 500px;
+      margin: auto;
+      padding: 0;
+      box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+    #list li {
+      border-bottom: 1px solid #efefef;
+      padding: 20px;
+    }
+    #list li:last-child {
+      border-bottom: 0;
+    }
+
+    a {
+      color: #ffc600;
+      text-decoration: none;
+    }
+
+    .add-items {
+      background: white;
+      width: 500px;
+      margin: auto 20px;
+      padding: 0;
+      box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .add-items input {
+      padding:10px;
+      outline:0;
+      border:1px solid rgba(0,0,0,0.1);
+    }
+  </style>
+
+  <ul id="list"></ul>
+  <form class="add-items">
+    <input type="text" name="item" placeholder="Item Name" required>
+    <input type="submit" value="+ Add Item">
+  </form>
+
+<script>
+  const addItems = document.querySelector('.add-items');
+  const itemsList = document.querySelector('#list');
+  const items = JSON.parse(localStorage.getItem('items')) || [];
+
+  function strip(itemName) {
+  return bandName.replace(/^(a |the |an )/i, '').trim();
+  }
+
+  function addItem(e) {
+    e.preventDefault();
+    const text = (this.querySelector('[name=item]')).value;
+    const item = {
+      text: text,
+      done: false
+    };
+
+    items.push(item);
+    populateList(items, itemsList);
+    localStorage.setItem('items',JSON.stringify(items));
+    this.reset();
+  }
+
+const sortedItem = items.sort(function( a, b) {
+  if(strip(a) > strip(b)) {
+    return 1;
+  }else{
+    return -1;
+  }
+})
+
+
+function populateList(items = [], itemsList) {
+    itemsList.innerHTML = 
+      sortedItem
+        .map(items => `<li>${items}</li>`)
+        .join('')
+  }
+  
+  addItems.addEventListener('submit', addItem);
+  populateList(items, itemsList);
+
+</script>
+
+</body>
+</html>

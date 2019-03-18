@@ -1,1 +1,0 @@
-[20-Apr-2016 18:44:38 UTC] PHP Warning:  copy(/home/adamcarlebach/public_html/wordpress/wp-content/upgrade/wordpress-4.5-no-content-cek0lG/wordpress/wp-includes/version.php): failed to open stream: No such file or directory in /home/adamcarlebach/public_html/wordpress/wp-admin/includes/class-wp-filesystem-direct.php on line 257
