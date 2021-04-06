@@ -792,7 +792,7 @@ section {
   padding-left: 60px;
 }
 
-.contact .info .social-links a {
+.contact .info .social-links i {
   font-size: 18px;
   display: inline-block;
   background: #333;
@@ -807,7 +807,7 @@ section {
   margin-right: 10px;
 }
 
-.contact .info .social-links a:hover {
+.contact .info .social-links i:hover {
   background: #149ddd;
   color: #fff;
 }
