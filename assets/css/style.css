@@ -1,6 +1,10 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+:root {
+  --header-color: #173b6c;
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   color: #272829;
@@ -299,7 +303,7 @@ section {
   margin-bottom: 20px;
   padding-bottom: 20px;
   position: relative;
-  color: #173b6c;
+  color: var(--header-color);
 }
 
 .section-title h2::after {
