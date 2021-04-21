@@ -482,12 +482,11 @@ section {
 .resume .resume-item::before {
   content: "";
   position: absolute;
-  width: 16px;
+  width: 12px;
   height: 16px;
-  border-radius: 50px;
-  left: -9px;
+  left: -2px;
   top: 0;
-  background: #fff;
+  background: #1f5297;
   border: 2px solid #1f5297;
 }
 
