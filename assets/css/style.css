@@ -750,6 +750,12 @@ section {
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
+.hubspot-link__container.sproket{
+  display: none;
+}
+.hbspt-form{
+  width: 100%;
+}
 .contact {
   padding-bottom: 130px;
 }
