@@ -31,7 +31,7 @@ h6 {
   font-family: "Raleway", sans-serif;
 }
 
-.btn, .btn:hover, .btn-primary:hover{
+.btn, .btn:hover, .btn-primary:hover,.btn-primary:active{
   background-color: var(--accent-color);
   border: var(--accent-color);
   border-radius: 55px;
