@@ -38,6 +38,10 @@ h6 {
   padding: 16px 20px;
 }
 
+.vh-80{
+  min-height: 80vh!important;
+}
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -155,6 +159,9 @@ h6 {
 .nav-menu>ul>li {
   position: relative;
   white-space: nowrap;
+}
+.nav-menu>ul>li span{
+  text-shadow: 1px 1px 2px var(--accent-color), 0 0 1em var(--primary-color), 0 0 0.2em var(--primary-color);
 }
 
 .nav-menu a {
@@ -630,10 +637,10 @@ section {
   justify-content: center;
   width: 54px;
   height: 54px;
-  background: #6d6e70;
+  background: var(--primary-color);
   border-radius: 50%;
   transition: 0.5s;
-  border: 1px solid #6d6e70;
+  border: 1px solid var(--primary-color);
 }
 
 .services .icon i {
@@ -646,7 +653,7 @@ section {
 }
 
 .services .icon-box:hover .icon i {
-  color: #6d6e70;
+  color: var(--primary-color);
 }
 
 .services .title {
