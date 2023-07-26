@@ -31,8 +31,8 @@ h6 {
   font-family: "Raleway", sans-serif;
 }
 
-.btn, .btn:hover, .btn-primary:hover,.btn-primary:active{
-  background-color: var(--accent-color);
+.btn, .btn:hover, .btn-primary:hover,.btn-primary:active, .hs-button {
+  background-color: var(--accent-color) !important;
   border: var(--accent-color);
   border-radius: 55px;
   padding: 16px 20px;
@@ -428,7 +428,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Akills
+# Skills
 --------------------------------------------------------------*/
 .skills .progress {
   height: 50px;
@@ -782,6 +782,11 @@ input{
 .hubspot-link__container.sproket{
   display: none;
 }
+.hbspt-form input {
+  margin: 5px 0;
+  padding: 10px;
+}
+
 .hbspt-form{
   width: 100%;
 }
