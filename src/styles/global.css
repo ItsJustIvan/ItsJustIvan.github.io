@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body, p, nav, ul, li, input, button, textarea {
+  @apply font-body;
+}
+h1, h2, h3 {
+  @apply font-heading;
+}
+
+.time-line-container>div:last-child .education__time>.education__line {
+    display: none;
+}
+
+.btn,
+button.btn,
+input[type="submit"],
+input[type="button"] {
+  @apply bg-primary text-lightbg hover:bg-dark font-heading transition-colors;
+}
+
+.btn-outline,
+button.btn-outline {
+  @apply bg-secondary text-dark border border-secondary hover:bg-primary hover:text-lightbg hover:border-primary font-heading transition-colors;
+}
+
+.social-icon {
+  @apply text-secondary hover:text-accent transition-colors;
+}

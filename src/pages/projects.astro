@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HorizontalCard from "../components/HorizontalCard.astro";
+import { getCaseStudyPageData } from "../lib/contentful";
+
+const caseStudies = await getCaseStudyPageData();
+---
+
+<BaseLayout title="Projects" sideBarActiveItemID="projects">
+  <div>
+    <div class="text-3xl w-full font-bold mb-5">Projects</div>
+  </div>
+
+  {caseStudies.length === 0 && (
+    <div class="text-lg text-gray-500">No projects found.</div>
+  )}
+
+  {caseStudies.map((project) => (
+    <>
+      <HorizontalCard
+        title={project.title}
+        img={project.mainImageUrl}
+        desc={project.summary}
+        url={`/projects/${project.slug}/`}
+        badge={project.isFeatured ? "FEATURED" : undefined}
+      />
+      <div class="divider my-0"></div>
+    </>
+  ))}
+</BaseLayout>

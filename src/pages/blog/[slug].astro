@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostLayout from "../../layouts/PostLayout.astro";
+import { getBlogPosts, getBlogPostBySlug } from "../../lib/contentful";
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+
+export async function getStaticPaths() {
+  const posts = await getBlogPosts();
+  return posts.map((post) => ({ params: { slug: post.slug } }));
+}
+
+export async function get({ params }) {
+  const post = await getBlogPostBySlug(params.slug);
+  let contentHtml = '';
+  if (post && post.content) {
+    contentHtml = documentToHtmlString(post.content);
+  }
+  return {
+    props: {
+      post,
+      contentHtml,
+      params,
+    },
+  };
+}
+
+const { post, contentHtml, params = {} } = Astro.props;
+---
+<BaseLayout title={post?.title ?? "Blog Post"} sideBarActiveItemID="blog">
+  {post ? (
+    <PostLayout
+      title={post.title}
+      description={post.description}
+      pubDate={post.date}
+      heroImage={post.mainImage}
+      // updatedDate, badge, tags can be added if you add those fields to your model
+    >
+      <div innerHTML={contentHtml} />
+    </PostLayout>
+  ) : (
+    <p>
+      Blog post not found for slug: <code>{params.slug ?? "undefined"}</code>
+    </p>
+  )}
+</BaseLayout>

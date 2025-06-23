@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HorizontalCard from "../../components/HorizontalCard.astro";
+import { getBlogPosts } from "../../lib/contentful";
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await getBlogPosts();
+  posts.sort((a, b) => new Date(b.date || b.publishedDate) - new Date(a.date || a.publishedDate));
+  return paginate(posts, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+const allTags = Array.from(new Set(page.data.flatMap(post => post.tags || [])));
+let selectedTag = '';
+if (Astro.url.searchParams.has('tag')) {
+  selectedTag = Astro.url.searchParams.get('tag');
+}
+const filteredPosts = selectedTag
+  ? page.data.filter(post => (post.tags || []).includes(selectedTag))
+  : page.data;
+---
+
+<BaseLayout title="Blog" sideBarActiveItemID="blog">
+  <div class="mb-5">
+    <div class="text-3xl w-full font-bold">Blog</div>
+    {allTags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mt-2 mb-6">
+        <a href="/blog/" class={`badge px-3 py-2 cursor-pointer ${!selectedTag ? 'btn btn-primary' : 'btn btn-white'}`}>All</a>
+        {allTags.map(tag => (
+          <a
+            href={`/blog/?tag=${encodeURIComponent(tag)}`}
+            class={`badge px-3 py-2 cursor-pointer ${selectedTag === tag ? 'btn btn-secondary' : 'btn btn-white'}`}
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+
+  {
+    filteredPosts.length === 0 ? (
+      <div class="bg-base-200 border-l-4 border-secondary w-full p-4 min-w-full">
+        <p class="font-bold">Sorry!</p>
+        <p>There are no blog posts to show at the moment. Check back later!</p>
+      </div>
+    ) : (
+      <div class="grid md:grid-cols-3 gap-6">
+        {filteredPosts.map((post) => (
+          <HorizontalCard
+            title={post.title}
+            img={post.image}
+            desc={post.description}
+            url={`/blog/${post.slug}/`}
+            target="_self"
+            badge={post.badge}
+            tags={post.tags}
+          />
+        ))}
+      </div>
+    )
+  }
+</BaseLayout>
