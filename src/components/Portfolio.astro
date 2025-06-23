@@ -1,0 +1,30 @@
+---
+// Portfolio.astro
+import { getCaseStudyPageData } from '../lib/contentful';
+const caseStudies = (await getCaseStudyPageData()).map(cs => cs.props);
+---
+<section id="portfolio" class="portfolio section-bg">
+  <div class="container">
+    <div class="section-title">
+      <h2>Portfolio</h2>
+    </div>
+    <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
+      {caseStudies.map((cs) => (
+        <div class="col-lg-4 col-md-6 portfolio-item">
+          <div class="portfolio-wrap">
+            {cs.mainImageUrl.endsWith('.webm') ? (
+              <video playsinline autoplay muted loop class="img-fluid">
+                <source src={cs.mainImageUrl} type="video/webm" alt={cs.title} />
+              </video>
+            ) : (
+              <img src={cs.mainImageUrl} class="img-fluid" alt={cs.title} />
+            )}
+            <div class="portfolio-links">
+              <a href={`/case/${cs.slug}`} title="More Details"><i class="bx bx-link"></i></a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

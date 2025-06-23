@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://itsjustivan.com/sitemap-index.xml

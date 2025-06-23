@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCaseStudyPageData, getCaseStudyBySlug } from "../../lib/contentful";
+
+export async function getStaticPaths() {
+  const caseStudies = await getCaseStudyPageData();
+  return caseStudies.map(cs => ({ params: { slug: cs.slug } }));
+}
+
+export async function get({ params }) {
+  const caseStudy = await getCaseStudyBySlug(params.slug);
+  return {
+    props: {
+      caseStudy,
+      params
+    }
+  };
+}
+
+const { caseStudy, params = {} } = Astro.props;
+---
+<BaseLayout title={caseStudy?.title ?? "Case Study"} sideBarActiveItemID="projects">
+  {caseStudy ? (
+    <>
+      <h1>{caseStudy.title}</h1>
+      <p>{caseStudy.summary}</p>
+      {/* Add more fields as needed */}
+    </>
+  ) : (
+    <p>Case study not found for slug: <code>{params.slug ?? "undefined"}</code></p>
+  )}
+</BaseLayout>

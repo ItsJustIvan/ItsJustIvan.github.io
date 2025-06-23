@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import FeaturedProjects from "../components/FeaturedProjects.astro";
+import ServicesPreview from "../components/ServicesPreview.astro";
+import MiniAbout from "../components/MiniAbout.astro";
+import Testimonials from "../components/Testimonials.astro";
+import ContactCTA from "../components/ContactCTA.astro";
+---
+
+<BaseLayout sideBarActiveItemID="home">
+  <Hero />
+  <FeaturedProjects />
+  <ServicesPreview />
+  <MiniAbout />
+  <Testimonials />
+  <ContactCTA />
+</BaseLayout>

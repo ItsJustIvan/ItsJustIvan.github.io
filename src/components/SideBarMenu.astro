@@ -1,0 +1,20 @@
+---
+const { sideBarActiveItemID } = Astro.props;
+const activeClass = "bg-base-300";
+---
+
+<ul class="menu grow shrink menu-md overflow-y-auto">
+    <li><a class={`py-3 text-base${sideBarActiveItemID === 'home' ? ' ' + activeClass : ''}`} id="home" href="/">Home</a></li>
+    <li><a class={`py-3 text-base${sideBarActiveItemID === 'projects' ? ' ' + activeClass : ''}`} id="projects" href="/projects/">Projects</a></li>
+    <li><a class={`py-3 text-base${sideBarActiveItemID === 'services' ? ' ' + activeClass : ''}`} id="services" href="/services/">Services</a></li>
+    <li><a class={`py-3 text-base${sideBarActiveItemID === 'blog' ? ' ' + activeClass : ''}`} id="blog" href="/blog/">Blog</a></li>
+    <li><a class={`py-3 text-base${sideBarActiveItemID === 'resume' ? ' ' + activeClass : ''}`} id="resume" href="/resume/">Resume</a></li>
+    <li>
+        <a
+            class="py-3 text-base"
+            href="mailto:contact.manuelernestog@gmail.com"
+            target="_blank"
+            referrerpolicy="no-referrer-when-downgrade">Contact</a
+        >
+    </li>
+</ul>
