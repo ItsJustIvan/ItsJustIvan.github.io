@@ -1,0 +1,63 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+
+dayjs.extend(localizedFormat);
+
+const {
+  title, // Title (Symbol)
+  summary, // Summary (Text)
+  fullDescriptionHtml, // Full Description (RichText -> HTML)
+  servicesUsed = [], // Services Used (Array)
+  link, // Link (Symbol)
+  mainImage, // Main Image (Asset URL)
+  publishedDate, // Published Date (Date)
+  isFeatured = false, // Is Featured? (Boolean)
+  // slug is not used in layout, but could be for SEO or links
+} = Astro.props;
+const displayDate = publishedDate ? dayjs(publishedDate).format('ll') : '';
+const isWebm = mainImage && mainImage.endsWith('.webm');
+---
+<BaseLayout title={title} description={summary} image={mainImage} ogType="article" active="projects">
+  <main class="md:flex md:justify-center">
+    <article class="prose prose-lg max-w-[750px] prose-img:mx-auto">
+      {/* Main Image or Video */}
+      {mainImage && (
+        isWebm ? (
+          <video width={750} height={422} src={mainImage} alt={title} class="w-full mb-6 rounded" autoplay loop muted playsinline />
+        ) : (
+          <img width={750} height={422} src={mainImage} alt={title} class="w-full mb-6 rounded" />
+        )
+      )}
+      {/* Featured Badge */}
+      {isFeatured && (
+        <span class="inline-block mb-2 px-3 py-1 rounded-full bg-accent text-white text-xs font-semibold tracking-wide">Featured</span>
+      )}
+      {/* Title */}
+      <h1 class="title my-2 text-4xl font-bold">{title}</h1>
+      {/* Published Date */}
+      {displayDate && <time class="block text-secondary mb-2">{displayDate}</time>}
+      {/* Summary */}
+      {summary && <p class="text-lg text-secondary mb-4">{summary}</p>}
+      {/* Services Used */}
+      {servicesUsed.length > 0 && (
+        <div class="mb-4">
+          <span class="font-semibold">Services Used:</span>
+          <ul class="flex flex-wrap gap-2 mt-1">
+            {servicesUsed.map(service => (
+              <li class="bg-secondary text-primary px-2 py-1 rounded text-xs">{service}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {/* Project Link */}
+      {link && (
+        <a href={link} target="_blank" rel="noopener" class="inline-block mb-4 text-primary hover:text-dark hover:underline">View Project ↗</a>
+      )}
+      <div class="divider my-2"></div>
+      {/* Full Description (Rich Text) */}
+      <div set:html={fullDescriptionHtml} />
+    </article>
+  </main>
+</BaseLayout>

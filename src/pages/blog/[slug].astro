@@ -1,45 +1,32 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import PostLayout from "../../layouts/PostLayout.astro";
-import { getBlogPosts, getBlogPostBySlug } from "../../lib/contentful";
+import { getBlogPostBySlug, getBlogPosts } from "../../lib/contentful";
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import PostLayout from "../../layouts/PostLayout.astro";
 
 export async function getStaticPaths() {
   const posts = await getBlogPosts();
-  return posts.map((post) => ({ params: { slug: post.slug } }));
+  return posts.map(post => ({ params: { slug: post.slug } }));
 }
 
-export async function get({ params }) {
-  const post = await getBlogPostBySlug(params.slug);
-  let contentHtml = '';
-  if (post && post.content) {
-    contentHtml = documentToHtmlString(post.content);
-  }
-  return {
-    props: {
-      post,
-      contentHtml,
-      params,
-    },
-  };
+const { slug } = Astro.params;
+const post = await getBlogPostBySlug(slug);
+
+if (!post) {
+  throw new Error('Post not found');
 }
 
-const { post, contentHtml, params = {} } = Astro.props;
+const contentHtml = documentToHtmlString(post.content);
+const servicesUsed = post.servicesUsed || [];
 ---
-<BaseLayout title={post?.title ?? "Blog Post"} sideBarActiveItemID="blog">
-  {post ? (
-    <PostLayout
-      title={post.title}
-      description={post.description}
-      pubDate={post.date}
-      heroImage={post.mainImage}
-      // updatedDate, badge, tags can be added if you add those fields to your model
-    >
-      <div innerHTML={contentHtml} />
-    </PostLayout>
-  ) : (
-    <p>
-      Blog post not found for slug: <code>{params.slug ?? "undefined"}</code>
-    </p>
+<PostLayout title={post.title} description={post.description} date={post.date} mainImage={post.mainImage}>
+  {/* Services Used Badges */}
+  {servicesUsed.length > 0 && (
+    <div class="mb-4 flex flex-wrap gap-2">
+      {servicesUsed.map(service => (
+        <span class="bg-secondary text-primary px-2 py-1 rounded text-xs font-semibold" style="display:inline-block">{service}</span>
+      ))}
+    </div>
   )}
-</BaseLayout>
+  {/* Full Description / Content */}
+  <div set:html={contentHtml} />
+</PostLayout>

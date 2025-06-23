@@ -1,32 +1,28 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getCaseStudyPageData, getCaseStudyBySlug } from "../../lib/contentful";
+import { getCaseStudyBySlug, getCaseStudyPageData } from "../../lib/contentful";
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
 
 export async function getStaticPaths() {
   const caseStudies = await getCaseStudyPageData();
   return caseStudies.map(cs => ({ params: { slug: cs.slug } }));
 }
 
-export async function get({ params }) {
-  const caseStudy = await getCaseStudyBySlug(params.slug);
-  return {
-    props: {
-      caseStudy,
-      params
-    }
-  };
+const { slug } = Astro.params;
+const caseStudy = await getCaseStudyBySlug(slug);
+
+if (!caseStudy) {
+  throw new Error('Case study not found');
 }
 
-const { caseStudy, params = {} } = Astro.props;
+const fullDescriptionHtml = documentToHtmlString(caseStudy.fullDescription);
 ---
-<BaseLayout title={caseStudy?.title ?? "Case Study"} sideBarActiveItemID="projects">
-  {caseStudy ? (
-    <>
-      <h1>{caseStudy.title}</h1>
-      <p>{caseStudy.summary}</p>
-      {/* Add more fields as needed */}
-    </>
-  ) : (
-    <p>Case study not found for slug: <code>{params.slug ?? "undefined"}</code></p>
-  )}
-</BaseLayout>
+<ProjectLayout
+  title={caseStudy.title}
+  summary={caseStudy.summary}
+  fullDescriptionHtml={fullDescriptionHtml}
+  servicesUsed={caseStudy.servicesUsed}
+  link={caseStudy.link}
+  mainImage={caseStudy.mainImage}
+  publishedDate={caseStudy.publishedDate}
+/>
