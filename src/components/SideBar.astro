@@ -5,9 +5,9 @@ import SideBarMenu from "./SideBarMenu.astro";
 const { sideBarActiveItemID } = Astro.props;
 ---
 
-<div class="drawer-side z-40">
+<div class="drawer-side z-40 overflow-hidden">
   <label for="my-drawer" class="drawer-overlay"></label>
-  <aside class="px-2 pt-2 h-auto min-h-full w-[19rem] bg-base-200 text-base-content flex flex-col">
+  <aside class="px-2 pt-2 h-full w-[19rem] bg-base-200/80 backdrop-blur-md shadow-xl rounded-xl text-base-content flex flex-col border border-base-300 overflow-hidden">
     <div class="w-fit mx-auto mt-5 mb-6">
       <a href="/">
         <div class="avatar transition ease-in-out hover:scale-[102%] block m-auto">

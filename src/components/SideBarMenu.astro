@@ -1,20 +1,20 @@
 ---
 const { sideBarActiveItemID } = Astro.props;
-const activeClass = "bg-base-300";
+const activeClass = "bg-primary text-lightbg shadow-lg";
+const baseClass = "py-3 px-4 text-base rounded-lg transition-colors duration-200 flex items-center gap-3 hover:bg-base-300 hover:text-accent";
 ---
 
-<ul class="menu grow shrink menu-md overflow-y-auto">
-    <li><a class={`py-3 text-base${sideBarActiveItemID === 'home' ? ' ' + activeClass : ''}`} id="home" href="/">Home</a></li>
-    <li><a class={`py-3 text-base${sideBarActiveItemID === 'projects' ? ' ' + activeClass : ''}`} id="projects" href="/projects/">Projects</a></li>
-    <li><a class={`py-3 text-base${sideBarActiveItemID === 'services' ? ' ' + activeClass : ''}`} id="services" href="/services/">Services</a></li>
-    <li><a class={`py-3 text-base${sideBarActiveItemID === 'blog' ? ' ' + activeClass : ''}`} id="blog" href="/blog/">Blog</a></li>
-    <li><a class={`py-3 text-base${sideBarActiveItemID === 'resume' ? ' ' + activeClass : ''}`} id="resume" href="/resume/">Resume</a></li>
+<ul class="menu grow shrink menu-md w-full">
+    <li><a class={`${baseClass}${sideBarActiveItemID === 'home' ? ' ' + activeClass : ''}`} id="home" href="/"><i class="bx bx-home"></i>Home</a></li>
+    <li><a class={`${baseClass}${sideBarActiveItemID === 'projects' ? ' ' + activeClass : ''}`} id="projects" href="/projects/"><i class="bx bx-briefcase"></i>Projects</a></li>
+    <li><a class={`${baseClass}${sideBarActiveItemID === 'services' ? ' ' + activeClass : ''}`} id="services" href="/services/"><i class="bx bx-cog"></i>Services</a></li>
+    <li><a class={`${baseClass}${sideBarActiveItemID === 'blog' ? ' ' + activeClass : ''}`} id="blog" href="/blog/"><i class="bx bx-news"></i>Blog</a></li>
+    <li><a class={`${baseClass}${sideBarActiveItemID === 'resume' ? ' ' + activeClass : ''}`} id="resume" href="/resume/"><i class="bx bx-file"></i>Resume</a></li>
     <li>
         <a
-            class="py-3 text-base"
+            class="py-3 px-4 text-base rounded-lg flex items-center gap-3 hover:bg-base-300 hover:text-accent transition-colors duration-200 w-full"
             href="mailto:contact.manuelernestog@gmail.com"
             target="_blank"
-            referrerpolicy="no-referrer-when-downgrade">Contact</a
-        >
+            referrerpolicy="no-referrer-when-downgrade"><i class="bx bx-envelope"></i>Contact</a>
     </li>
 </ul>
