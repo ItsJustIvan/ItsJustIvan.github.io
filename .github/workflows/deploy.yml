@@ -35,3 +35,5 @@ jobs:
         with:
           site: ./dist
           cname: itsjustivan.com
+          package-manager: pnpm@10.12.1
+
