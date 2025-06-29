@@ -1,0 +1,64 @@
+name: Deploy Astro Project to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # This workflow runs when changes are merged into the 'main' branch
+
+  # Allows you to run this workflow manually from the Actions tab on GitHub
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # The type of machine to run the job on
+
+    # Give the GITHUB_TOKEN write permission to the contents of the repository
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Action to check out your repository code
+        with:
+          # Fetch all history for peaceiris/actions-gh-pages
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4 # Action to set up Node.js
+        with:
+          node-version: '20' # Specify your preferred Node.js version (e.g., 18, 20, 22)
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3 # Action to set up pnpm
+        with:
+          version: 8 # Specify a pnpm version, or 'latest'
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          # Cache pnpm modules
+          echo "PNPM_CACHE_DIR=$(pnpm store path)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.PNPM_CACHE_DIR }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile # Install dependencies using pnpm's CI mode
+
+      - name: Build Astro site
+        run: pnpm run build # Run your Astro build command
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3 # Action to deploy to GitHub Pages
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} # Automatically provided token for GitHub Actions
+          publish_dir: ./dist # The directory containing your built site
+          publish_branch: main # The branch to push the *built* site to (for your User Page)
+          # user_name: 'github-actions[bot]' # Optional: customize commit author
+          # user_email: 'github-actions[bot]@users.noreply.github.com' # Optional: customize commit email
+          # cname: itsjustivan.com # Optional: if you want the action to manage CNAME, otherwise it picks up from dist
