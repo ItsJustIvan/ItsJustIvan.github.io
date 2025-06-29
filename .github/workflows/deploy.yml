@@ -21,6 +21,13 @@ jobs:
         with:
           node-version: '20' # Or your preferred Node.js version
           cache: 'pnpm' # Use pnpm cache directly with setup-node
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3 # Use v3 of this action
+        with:
+          version: 9.x # Explicitly tell it to use pnpm v9
+          run_install: false # We will run install manually
+
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
