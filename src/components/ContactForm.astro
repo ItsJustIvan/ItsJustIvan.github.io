@@ -11,6 +11,7 @@ const {
   action={formAction}
   method="POST"
   class="grid gap-4 max-w-lg w-full"
+  id="contactForm"
 >
   {showTitle && <h2 class="text-2xl font-bold mb-2">Contact Me</h2>}
 
@@ -34,3 +35,55 @@ const {
 
   <button type="submit" class="btn btn-primary mt-4">{submitText}</button>
 </form>
+
+<script is:inline>
+  const form = document.getElementById('contactForm'); // Make sure your form has id="contactForm"
+  const formStatus = document.getElementById('formStatus');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(form);
+    const formUrl = form.action; // Get the Formspree endpoint from the form's action attribute
+
+    formStatus.textContent = 'Sending message...';
+    formStatus.className = 'mt-4 text-center block text-gray-700'; // Show and style status
+    form.querySelector('button[type="submit"]').disabled = true; // Disable button
+
+    try {
+      const response = await fetch(formUrl, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json' // Important for JSON response
+        }
+      });
+
+      if (response.ok) { // Check if the request was successful (status 2xx)
+        formStatus.textContent = 'Message sent successfully!';
+        formStatus.className = 'mt-4 text-center block text-green-600 font-semibold'; // Style success
+        form.reset(); // Clear the form
+
+        // --- REDIRECTION LOGIC ---
+        setTimeout(() => {
+          window.location.replace('/thank-you'); // Redirect after 1.5 seconds
+        }, 1500); // 1500 milliseconds = 1.5 seconds
+
+      } else {
+        const data = await response.json();
+        if (Object.hasOwnProperty.call(data, 'errors')) {
+          formStatus.textContent = data["errors"].map(error => error["message"]).join(", ");
+        } else {
+          formStatus.textContent = 'Oops! There was a problem sending your message.';
+        }
+        formStatus.className = 'mt-4 text-center block text-red-600 font-semibold'; // Style error
+        form.querySelector('button[type="submit"]').disabled = false; // Re-enable button
+      }
+    } catch (error) {
+      formStatus.textContent = 'Oops! There was a network error.';
+      formStatus.className = 'mt-4 text-center block text-red-600 font-semibold'; // Style error
+      form.querySelector('button[type="submit"]').disabled = false; // Re-enable button
+      console.error('Fetch error:', error);
+    }
+  });
+</script>
