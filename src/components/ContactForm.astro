@@ -1,0 +1,36 @@
+---
+const {
+  formAction = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT,
+  showTitle = true,
+  showLabels = true,
+  submitText = "Send"
+} = Astro.props;
+---
+
+<form
+  action={formAction}
+  method="POST"
+  class="grid gap-4 max-w-lg w-full"
+>
+  {showTitle && <h2 class="text-2xl font-bold mb-2">Contact Me</h2>}
+
+  <label class={showLabels ? "block" : "sr-only"}>
+    {showLabels && <span>Name</span>}
+    <input type="text" name="name" required class="input input-bordered w-full" placeholder="Your name" />
+  </label>
+
+  <label class={showLabels ? "block" : "sr-only"}>
+    {showLabels && <span>Email</span>}
+    <input type="email" name="email" required class="input input-bordered w-full" placeholder="you@email.com" />
+  </label>
+
+  <label class={showLabels ? "block" : "sr-only"}>
+    {showLabels && <span>Message</span>}
+    <textarea name="message" rows="5" required class="textarea textarea-bordered w-full" placeholder="What can I help you with?" />
+  </label>
+
+  <input type="hidden" name="_subject" value="New Portfolio Inquiry" />
+  <input type="hidden" name="_redirect" value="https://itsjustivan.com/thank-you" />
+
+  <button type="submit" class="btn btn-primary mt-4">{submitText}</button>
+</form>
