@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "pnpm run build && gh-pages -d dist -b main"
+    "deploy": "pnpm run build && gh-pages -d dist -b gh-pages"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.0.3",
