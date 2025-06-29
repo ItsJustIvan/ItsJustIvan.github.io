@@ -34,40 +34,50 @@ const {
   <input type="hidden" name="_redirect" value="https://itsjustivan.com/thank-you" />
 
   <button type="submit" class="btn btn-primary mt-4">{submitText}</button>
+
+  <p id="formStatus" class="mt-4 text-center text-gray-700"></p>
+
+  <div class="mt-6 pt-4 border-t border-gray-200 text-center">
+    <p class="text-gray-600 mb-2">
+      Prefer to email directly?
+    </p>
+    <p class="text-gray-900 text-sm ">
+      <a href="mailto:itsjustivanyip@gmail.com" class="hover:underline transition-colors duration-200">itsjustivanyip@gmail.com</a>
+    </p>
+  </div>
 </form>
 
 <script is:inline>
-  const form = document.getElementById('contactForm'); // Make sure your form has id="contactForm"
-  const formStatus = document.getElementById('formStatus');
+  const form = document.getElementById('contactForm');
+  const formStatus = document.getElementById('formStatus'); // Ensure this element exists in the HTML
 
   form.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const formData = new FormData(form);
-    const formUrl = form.action; // Get the Formspree endpoint from the form's action attribute
+    const formUrl = form.action;
 
     formStatus.textContent = 'Sending message...';
-    formStatus.className = 'mt-4 text-center block text-gray-700'; // Show and style status
-    form.querySelector('button[type="submit"]').disabled = true; // Disable button
+    formStatus.className = 'mt-4 text-center block text-gray-700';
+    form.querySelector('button[type="submit"]').disabled = true;
 
     try {
       const response = await fetch(formUrl, {
         method: 'POST',
         body: formData,
         headers: {
-          'Accept': 'application/json' // Important for JSON response
+          'Accept': 'application/json'
         }
       });
 
-      if (response.ok) { // Check if the request was successful (status 2xx)
+      if (response.ok) {
         formStatus.textContent = 'Message sent successfully!';
-        formStatus.className = 'mt-4 text-center block text-green-600 font-semibold'; // Style success
-        form.reset(); // Clear the form
+        formStatus.className = 'mt-4 text-center block text-green-600 font-semibold';
+        form.reset();
 
-        // --- REDIRECTION LOGIC ---
         setTimeout(() => {
-          window.location.replace('/thank-you'); // Redirect after 1.5 seconds
-        }, 1500); // 1500 milliseconds = 1.5 seconds
+          window.location.replace('/thank-you');
+        }, 1500);
 
       } else {
         const data = await response.json();
@@ -76,13 +86,13 @@ const {
         } else {
           formStatus.textContent = 'Oops! There was a problem sending your message.';
         }
-        formStatus.className = 'mt-4 text-center block text-red-600 font-semibold'; // Style error
-        form.querySelector('button[type="submit"]').disabled = false; // Re-enable button
+        formStatus.className = 'mt-4 text-center block text-red-600 font-semibold';
+        form.querySelector('button[type="submit"]').disabled = false;
       }
     } catch (error) {
       formStatus.textContent = 'Oops! There was a network error.';
-      formStatus.className = 'mt-4 text-center block text-red-600 font-semibold'; // Style error
-      form.querySelector('button[type="submit"]').disabled = false; // Re-enable button
+      formStatus.className = 'mt-4 text-center block text-red-600 font-semibold';
+      form.querySelector('button[type="submit"]').disabled = false;
       console.error('Fetch error:', error);
     }
   });
