@@ -5,9 +5,6 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'static',
-  site: 'https://itsjustivan.com/', // Use your custom domain for production
-  // If deploying to a subpath (e.g., github.io without a custom domain), set base: '/ItsJustIvan.github.io/',
-  trailingSlash: 'always',
+  site: 'https://astrofy-template.netlify.app',
   integrations: [mdx(), sitemap(), tailwind()]
 });

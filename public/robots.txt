@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://itsjustivan.com/sitemap-index.xml
+Sitemap: https://astrofy-template.netlify.app/sitemap-index.xml
