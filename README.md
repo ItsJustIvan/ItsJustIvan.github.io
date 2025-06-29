@@ -9,13 +9,13 @@ I'm Ivan Yip, a digital strategist who works at the intersection of web developm
 
 ## Live Site
 
-🔗 https://itsjustivan.github.io
+🔗 https://itsjustivan.com
 
 ---
 
 ## Contact
 
-- Email: `hello@itsjustivan.com`
+- Email: `itsjustivanyip@gmail.com`
 - LinkedIn: [linkedin.com/in/itsjustivan](https://www.linkedin.com/in/itsjustivan)
 
 If you're here to sell me crypto, don’t.
@@ -44,8 +44,7 @@ If you're here to sell me crypto, don’t.
 ## Contentful Integration
 
 This site pulls content dynamically from Contentful at build time.  
-The content model includes `caseStudy` and `blogPost`.  
-Configs are stored in `.env` (not included).
+The content model includes `caseStudy` and `blogPost`.
 
 ---
 

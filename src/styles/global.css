@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 body, p, nav, ul, li, input, button, textarea {
   @apply font-body;
 }
@@ -27,4 +28,8 @@ button.btn-outline {
 
 .social-icon {
   @apply text-secondary hover:text-accent transition-colors;
+}
+
+.time-line-container>div:last-child .education__time>.education__line {
+    display: none;
 }

@@ -15,7 +15,7 @@ const featured = (await getCaseStudyPageData()).filter(cs => cs.isFeatured).slic
         )}
         <h3 class="font-semibold text-lg mb-2">{cs.title}</h3>
         <p class="mb-4 text-sm text-gray-500">{cs.summary}</p>
-        <a href={`/case/${cs.slug}`} class="btn bg-primary text-lightbg hover:bg-dark mt-auto">View Case Study</a>
+        <a href={`/projects/${cs.slug}`} class="btn bg-primary text-lightbg hover:bg-dark mt-auto">View Case Study</a>
       </div>
     ))}
   </div>

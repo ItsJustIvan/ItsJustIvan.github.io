@@ -9,22 +9,11 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 >
   <a href={url} target={target}>
     <div class="hero-content flex-col md:flex-row">
-      {
-        img && (
-          img.endsWith('.webm') ? (
-            <video src={img} class="max-w-full md:max-w-[13rem] rounded-lg" autoplay loop muted playsinline />
-          ) : (
-            <Image
-              src={img}
-              width={750}
-              height={422}
-              format="webp"
-              alt={title}
-              class="max-w-full md:max-w-[13rem] rounded-lg"
-            />
-          )
-        )
-      }
+      {img && img.endsWith('.webm') ? (
+          <video src={img} class="max-w-full md:max-w-[13rem] rounded-lg" autoPlay loop muted playsInline />
+        ) : (
+          <img src={img} alt={title} class="max-w-full md:max-w-[13rem] rounded-lg" />
+        )}
       <div class="grow w-full">
         <h1 class="text-xl font-bold">
           {title}
