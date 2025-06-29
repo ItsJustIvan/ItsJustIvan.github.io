@@ -26,6 +26,16 @@ jobs:
           version: 9.x
           run_install: false
 
+      - name: Verify pnpm availability # <--- ADD THIS NEW DIAGNOSTIC STEP
+        run: |
+          echo "--- Checking pnpm availability ---"
+          echo "Attempting to locate pnpm:"
+          which pnpm || echo "pnpm not found by 'which'"
+          echo "Attempting to get pnpm version:"
+          pnpm --version || echo "pnpm --version command failed"
+          echo "Current PATH environment variable:"
+          echo "$PATH"
+          echo "--- End pnpm availability check ---"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
