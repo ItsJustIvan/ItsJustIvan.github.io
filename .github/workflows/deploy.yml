@@ -13,6 +13,8 @@ jobs:
     env: # <--- Ensure this block is correctly added here
       CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
       CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+      PUBLIC_FORMSPREE_ENDPOINT: ${{ secrets.PUBLIC_FORMSPREE_ENDPOINT }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

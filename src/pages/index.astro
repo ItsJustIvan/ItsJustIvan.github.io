@@ -6,6 +6,10 @@ import FeaturedProjects from "../components/FeaturedProjects.astro";
 import ServicesPreview from "../components/ServicesPreview.astro";
 import MiniAbout from "../components/MiniAbout.astro";
 import ContactCTA from "../components/ContactCTA.astro";
+import ContactForm from "../components/ContactForm.astro";
+import ContactModalWrapper from '../components/HeadlessModal.jsx'; // Import the React component
+
+
 
 import { getCollection } from "astro:content";
 import createSlug from "../lib/createSlug"
@@ -21,4 +25,7 @@ const last_posts = posts.slice(0, 3);
   <ServicesPreview />
   <MiniAbout />
   <ContactCTA />
+  <ContactModalWrapper client:load>
+      <ContactForm />
+  </ContactModalWrapper>
 </BaseLayout>
