@@ -11,39 +11,47 @@ const { problem, fiverrGigName, fiverrGigLink, comprehensiveSolutionTitle, compr
 ---
 
 <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col h-full">
-  <h3 class="text-xl font-semibold text-primary mb-4 flex-grow">{problem}</h3> {/* Changed text-gray-800 to text-primary */}
+  {/* Hierarchical #1: Comprehensive Solution Title (most prominent) */}
+  <h3 class="text-2xl font-bold text-primary mb-3 leading-snug">
+    {comprehensiveSolutionTitle}
+  </h3>
 
-  <div class="mt-auto pt-4 border-t border-secondary/30"> {/* Changed border-gray-100 to border-secondary/30 */}
+  {/* Hierarchical #2: Problem description */}
+  <p class="text-dark text-base mb-6 flex-grow">
+    {problem}
+  </p>
+
+  {/* Buttons Section - Pushed to bottom with mt-auto */}
+  <div class="mt-auto pt-4 border-t border-secondary/30">
+    {/* Hierarchical #3: "My Solution" (Primary Button for Comprehensive) */}
+    <div class="mb-4">
+      <a
+        href={comprehensiveSolutionLink}
+        class="inline-block w-full text-center bg-primary text-white px-5 py-2 rounded-md hover:bg-dark transition-colors duration-300 text-base font-semibold"
+      >
+        My Solution &rarr;
+      </a>
+    </div>
+
+    {/* Hierarchical #4: "Quick Fix" (Secondary Button for Fiverr) */}
     {fiverrGigLink && fiverrGigName ? (
-      <div class="mb-4">
-        <p class="text-sm text-dark mb-2"> {/* Changed text-gray-600 to text-dark */}
-          <strong class="text-accent">The Quick Fix:</strong> For immediate, targeted needs. {/* Changed text-blue-600 to text-accent */}
+      <div>
+        <p class="text-sm text-dark mb-2">
+          <strong class="text-accent">The Quick Fix:</strong> For immediate, targeted needs.
         </p>
         <a
           href={fiverrGigLink}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-block w-full text-center bg-accent text-white px-5 py-2 rounded-md hover:bg-accent-alt transition-colors duration-300 text-sm font-medium" {/* Changed bg-green-500 to bg-accent, text-white (good contrast), hover:bg-green-600 to hover:bg-accent-alt */}
+          class="inline-block w-full text-center bg-accent text-primary px-5 py-2 rounded-md hover:bg-accent-alt transition-colors duration-300 text-sm font-medium"
         >
           {fiverrGigName} on Fiverr &rarr;
         </a>
       </div>
     ) : (
-      <p class="text-sm text-secondary mb-4"> {/* Changed text-gray-500 to text-secondary */}
+      <p class="text-sm text-secondary">
         (No quick-fix Fiverr gig directly associated, but we can still help!)
       </p>
     )}
-
-    <div>
-      <p class="text-sm text-dark mb-2"> {/* Changed text-gray-600 to text-dark */}
-        <strong class="text-primary">The Comprehensive Solution:</strong> For deeper, strategic growth. {/* Changed text-purple-600 to text-primary */}
-      </p>
-      <a
-        href={comprehensiveSolutionLink}
-        class="inline-block w-full text-center bg-primary text-white px-5 py-2 rounded-md hover:bg-dark transition-colors duration-300 text-sm font-medium" {/* Changed bg-purple-600 to bg-primary, text-white (good contrast), hover:bg-purple-700 to hover:bg-dark */}
-      >
-        {comprehensiveSolutionTitle} &rarr;
-      </a>
-    </div>
   </div>
 </div>
