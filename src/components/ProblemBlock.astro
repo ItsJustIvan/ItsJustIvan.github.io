@@ -1,0 +1,49 @@
+---
+interface Props {
+  problem: string;
+  fiverrGigName: string;
+  fiverrGigLink: string;
+  comprehensiveSolutionTitle: string;
+  comprehensiveSolutionLink: string;
+}
+
+const { problem, fiverrGigName, fiverrGigLink, comprehensiveSolutionTitle, comprehensiveSolutionLink } = Astro.props;
+---
+
+<div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col h-full">
+  <h3 class="text-xl font-semibold text-primary mb-4 flex-grow">{problem}</h3> {/* Changed text-gray-800 to text-primary */}
+
+  <div class="mt-auto pt-4 border-t border-secondary/30"> {/* Changed border-gray-100 to border-secondary/30 */}
+    {fiverrGigLink && fiverrGigName ? (
+      <div class="mb-4">
+        <p class="text-sm text-dark mb-2"> {/* Changed text-gray-600 to text-dark */}
+          <strong class="text-accent">The Quick Fix:</strong> For immediate, targeted needs. {/* Changed text-blue-600 to text-accent */}
+        </p>
+        <a
+          href={fiverrGigLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block w-full text-center bg-accent text-white px-5 py-2 rounded-md hover:bg-accent-alt transition-colors duration-300 text-sm font-medium" {/* Changed bg-green-500 to bg-accent, text-white (good contrast), hover:bg-green-600 to hover:bg-accent-alt */}
+        >
+          {fiverrGigName} on Fiverr &rarr;
+        </a>
+      </div>
+    ) : (
+      <p class="text-sm text-secondary mb-4"> {/* Changed text-gray-500 to text-secondary */}
+        (No quick-fix Fiverr gig directly associated, but we can still help!)
+      </p>
+    )}
+
+    <div>
+      <p class="text-sm text-dark mb-2"> {/* Changed text-gray-600 to text-dark */}
+        <strong class="text-primary">The Comprehensive Solution:</strong> For deeper, strategic growth. {/* Changed text-purple-600 to text-primary */}
+      </p>
+      <a
+        href={comprehensiveSolutionLink}
+        class="inline-block w-full text-center bg-primary text-white px-5 py-2 rounded-md hover:bg-dark transition-colors duration-300 text-sm font-medium" {/* Changed bg-purple-600 to bg-primary, text-white (good contrast), hover:bg-purple-700 to hover:bg-dark */}
+      >
+        {comprehensiveSolutionTitle} &rarr;
+      </a>
+    </div>
+  </div>
+</div>

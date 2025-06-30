@@ -1,40 +1,75 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HorizontalCard from "../components/HorizontalCard.astro";
+import ServicesHero from "../components/ServicesHero.astro";
+import ProblemBlock from "../components/ProblemBlock.astro";
+import ContactCTA from "../components/ContactCTA.astro";
+
+const problemData = [
+  {
+    problem: "Your website traffic isn't converting into leads or sales. You're getting visitors, but they're not signing up, buying, or inquiring. You know you're leaving money on the table.",
+    fiverrGigName: "Website Conversion Audit",
+    fiverrGigLink: "YOUR_FIVERR_GIG_1_URL_HERE",
+    comprehensiveSolutionTitle: "Full-Funnel CRO Strategy & Implementation",
+    comprehensiveSolutionLink: "#contact-section",
+  },
+  {
+    problem: "Your marketing data is confusing, or you're unsure if it's accurate. You have Google Analytics, but you're unsure if it's set up correctly, or how to use the data to make smart decisions.",
+    fiverrGigName: "GA4 & Tag Manager Setup",
+    fiverrGigLink: "YOUR_FIVERR_GIG_3_URL_HERE",
+    comprehensiveSolutionTitle: "Advanced Marketing Analytics & Performance Consulting",
+    comprehensiveSolutionLink: "#contact-section",
+  },
+  {
+    problem: "Your landing pages are underperforming. You're running ads, but your landing pages aren't turning clicks into leads or sales. Your campaign ROI is suffering.",
+    fiverrGigName: "Landing Page Optimization",
+    fiverrGigLink: "YOUR_FIVERR_GIG_2_URL_HERE",
+    comprehensiveSolutionTitle: "End-to-End Campaign Optimization & Funnel Design",
+    comprehensiveSolutionLink: "#contact-section",
+  },
+  {
+    problem: "Your email marketing campaigns are clunky or not nurturing leads effectively. You need automation, segmentation, and compelling copy to drive engagement and sales.",
+    fiverrGigName: "Email Template/Audit (If applicable, or leave blank)",
+    fiverrGigLink: "",
+    comprehensiveSolutionTitle: "Email Marketing Workflow & Automation Strategy",
+    comprehensiveSolutionLink: "#contact-section",
+  },
+  {
+    problem: "You need a clear, actionable marketing roadmap for your B2B SaaS business. You're looking for a cohesive strategy to acquire, engage, and retain customers for scalable growth.",
+    fiverrGigName: "",
+    fiverrGigLink: "",
+    comprehensiveSolutionTitle: "B2B SaaS Marketing Strategy & Growth Consulting",
+    comprehensiveSolutionLink: "#contact-section",
+  },
+  {
+    problem: "You want to leverage AI and automation for smarter, more efficient marketing campaigns. You're keen to use cutting-edge tools to streamline workflows and boost performance.",
+    fiverrGigName: "",
+    fiverrGigLink: "",
+    comprehensiveSolutionTitle: "AI-Driven Campaign Optimization",
+    comprehensiveSolutionLink: "#contact-section",
+  },
+];
 ---
 
-<BaseLayout title="Projects" sideBarActiveItemID="services">
-  <div>
-    <div class="text-3xl w-full font-bold mb-5">Services Header</div>
-  </div>
+<BaseLayout title="Services | Your Problem, My Solution" description="Discover how I solve critical marketing challenges for B2B SaaS & eCommerce brands.">
+  <main>
+    <ServicesHero />
 
-  <HorizontalCard
-    title="Service 1"
-    img="/post_img.webp"
-    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    badge="NEW"
-    url="#"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="Service 2"
-    img="/post_img.webp"
-    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    url="#"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="Service 3"
-    img="/post_img.webp"
-    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    url="#"
-    badge="NEW"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="Service 4"
-    img="/post_img.webp"
-    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    url="#"
-  />
+    <section id="problem-solver-section" class="py-16 md:py-24 bg-lightbg"> {/* Changed bg-gray-50 to bg-lightbg */}
+      <div class="container mx-auto px-4 max-w-6xl text-center">
+        <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-12">Your Challenges, Solved.</h2> {/* Changed text-gray-900 to text-primary */}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {problemData.map((data) => (
+            <ProblemBlock
+              problem={data.problem}
+              fiverrGigName={data.fiverrGigName}
+              fiverrGigLink={data.fiverrGigLink}
+              comprehensiveSolutionTitle={data.comprehensiveSolutionTitle}
+              comprehensiveSolutionLink={data.comprehensiveSolutionLink}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+    <ContactCTA />
+  </main>
 </BaseLayout>
