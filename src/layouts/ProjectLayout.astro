@@ -2,6 +2,8 @@
 import BaseLayout from './BaseLayout.astro';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import ContactCTA from "../components/ContactCTA.astro";
+
 
 dayjs.extend(localizedFormat);
 
@@ -60,4 +62,6 @@ const isWebm = mainImage && mainImage.endsWith('.webm');
       <div set:html={fullDescriptionHtml} />
     </article>
   </main>
+  <ContactCTA />
+
 </BaseLayout>

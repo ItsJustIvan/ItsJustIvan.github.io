@@ -1,0 +1,42 @@
+<div class="relative bg-primary py-24 sm:py-32 overflow-hidden"> {/* Changed gradient to bg-primary */}
+  <div class="absolute inset-0 bg-pattern opacity-10"></div> {/* Optional: Add a subtle background pattern */}
+  <div class="container mx-auto px-4 relative z-10 text-center">
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6 animate-fade-in-up">
+      Solving Your Toughest Marketing Challenges
+    </h1>
+    <p class="text-lg sm:text-xl text-secondary max-w-3xl mx-auto mb-10 animate-fade-in-up delay-200"> {/* Changed text-blue-100 to text-secondary */}
+      Specialized strategies and hands-on execution for B2B SaaS & eCommerce brands to boost conversions, optimize data, and scale operations.
+    </p>
+    <a href="#problem-solver-section" class="inline-block bg-accent text-primary hover:bg-accent-alt px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in-up delay-400"> {/* Changed bg-white to bg-accent, text-blue-700 to text-primary, hover:bg-blue-100 to hover:bg-accent-alt */}
+      Find Your Solution Below &darr;
+    </a>
+  </div>
+</div>
+
+<style>
+  /* Basic animation for hero elements */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+    opacity: 0; /* Start hidden */
+  }
+
+  .animate-fade-in-up.delay-200 { animation-delay: 0.2s; }
+  .animate-fade-in-up.delay-400 { animation-delay: 0.4s; }
+
+  /* Optional: Simple pattern for background */
+  .bg-pattern {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+</style>

@@ -1,10 +1,12 @@
 ---
 import { getBlogPostBySlug, getBlogPosts } from "../../lib/contentful";
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types'; // Import necessary types
 import PostLayout from "../../layouts/PostLayout.astro";
+import ContactCTA from "../../components/ContactCTA.astro"; // Import ContactCTA
 
 export async function getStaticPaths() {
-  const posts = await getBlogPosts();
+  const posts = await getBlogPosts(); // Corrected function call
   return posts.map(post => ({ params: { slug: post.slug } }));
 }
 
@@ -15,18 +17,94 @@ if (!post) {
   throw new Error('Post not found');
 }
 
-const contentHtml = documentToHtmlString(post.content);
-const servicesUsed = post.servicesUsed || [];
+// Define the rendering options
+const options = {
+  renderNode: {
+    // Renderer for Contentful's Embedded Entry Blocks
+    [BLOCKS.EMBEDDED_ENTRY]: (node) => {
+      // Check the content type ID of the embedded entry
+      const contentTypeId = node.data.target?.sys?.contentType?.sys?.id;
+
+      if (!contentTypeId) {
+        return `<div>Error: Embedded entry content type not found.</div>`;
+      }
+
+      switch (contentTypeId) {
+        case 'videoEmbed': // For YouTube/Vimeo links (if you created this CT)
+          const videoUrl = node.data.target.fields.videoUrl;
+          if (videoUrl) {
+            if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+              const youtubeIdMatch = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([\w-]{11})(?:\S+)?/);
+              if (youtubeIdMatch && youtubeIdMatch[1]) {
+                return `<div class="aspect-w-16 aspect-h-9 my-6"><iframe src="https://www.youtube.com/embed/${youtubeIdMatch[1]}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full rounded-lg"></iframe></div>`;
+              }
+            } else if (videoUrl.includes('vimeo.com')) {
+              const vimeoIdMatch = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?(?:vimeo\.com)\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)(?:\S+)?/);
+              if (vimeoIdMatch && vimeoIdMatch[1]) {
+                return `<div class="aspect-w-16 aspect-h-9 my-6"><iframe src="https://player.vimeo.com/video/${vimeoIdMatch[1]}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen class="w-full h-full rounded-lg"></iframe></div>`;
+              }
+            }
+            return `<p class="text-red-500">Video not supported or URL invalid: ${videoUrl}</p>`;
+          }
+          break;
+
+        case 'rawHtmlEmbed': // Corrected case for your raw HTML embed type
+          const embedCode = node.data.target.fields.embedCode;
+          if (embedCode) {
+            // SECURITY WARNING: Be extremely cautious with rendering raw HTML directly.
+            // Ensure you fully trust the source of this HTML (i.e., yourself).
+            // For multi-editor sites, consider using a sanitization library like DOMPurify.
+            return `<div class="my-6">${embedCode}</div>`; // Wrap in a div for styling/spacing
+          }
+          return `<p class="text-red-500">Error: No embed code provided for Raw HTML Embed.</p>`;
+
+        default:
+          return `<div>Embedded content type not handled: ${contentTypeId}</div>`;
+      }
+      return `<div>Error rendering embedded entry.</div>`; // Fallback for unexpected scenarios
+    },
+    // Optional: Renderer for embedded assets (images, videos uploaded directly to Contentful)
+    [BLOCKS.EMBEDDED_ASSET]: (node) => {
+        const asset = node.data.target.fields;
+        if (!asset || !asset.file || !asset.file.url) return null; // Handle missing asset data
+
+        const imageUrl = asset.file.url.startsWith('http') ? asset.file.url : 'https:' + asset.file.url;
+        const description = asset.description || asset.title || '';
+        const isVideo = asset.file.contentType && asset.file.contentType.startsWith('video/');
+
+        if (isVideo) {
+            return `<video src="${imageUrl}" alt="${description}" class="w-full my-6 rounded-lg" controls autoplay loop muted playsinline></video>`;
+        } else {
+            return `<img src="${imageUrl}" alt="${description}" class="w-full my-6 rounded-lg" />`;
+        }
+    },
+    // You can add more custom renderers here for INLINES or other BLOCK types
+    // For example, to style specific text formats or links.
+  },
+};
+
+const contentHtml = documentToHtmlString(post.content, options);
+
+// No longer using servicesUsed for blog posts (commented out in previous versions)
+// const servicesUsed = post.servicesUsed || [];
 ---
 <PostLayout title={post.title} description={post.description} date={post.date} mainImage={post.mainImage}>
-  {/* Services Used Badges */}
-  {servicesUsed.length > 0 && (
+
+  {/* Display Tags from blogPost model */}
+  {post.tags && post.tags.length > 0 && (
     <div class="mb-4 flex flex-wrap gap-2">
-      {servicesUsed.map(service => (
-        <span class="bg-secondary text-primary px-2 py-1 rounded text-xs font-semibold" style="display:inline-block">{service}</span>
+      {post.tags.map(tag => (
+        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">{tag}</span>
       ))}
     </div>
   )}
+
   {/* Full Description / Content */}
-  <div set:html={contentHtml} />
+  <div class="prose prose-lg max-w-full mx-auto" set:html={contentHtml} />
+
+  {/* Add Contact CTA at the bottom */}
+  <div class="mt-12">
+    <ContactCTA />
+  </div>
+
 </PostLayout>
