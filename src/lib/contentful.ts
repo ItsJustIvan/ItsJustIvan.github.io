@@ -64,26 +64,36 @@ export async function getCaseStudyBySlug(slug) {
   };
 }
 
-// Fetch all blog posts
+// Fetch all blog posts - UPDATED
 export async function getBlogPosts() {
   const entries = await client.getEntries({
     content_type: 'blogPost',
     order: ['-fields.date', '-sys.createdAt'],
+    include: 2, // Crucial: Fetch linked entries (like Tags and embedded VideoEmbeds)
   });
   return entries.items.map(item => ({
-    ...item.fields,
     id: item.sys.id,
+    title: item.fields.title,
     slug: item.fields.slug,
-    image: getImageUrl(item.fields.image),
+    date: item.fields.date,
+    description: item.fields.description,
+    content: item.fields.content, // RichText content
+    mainImage: getImageUrl(item.fields.mainImage), // Standardized to mainImage
+    // Process tags: map array of tag references to array of tag names
+    tags: item.fields.tags
+      ? item.fields.tags.map(tagRef => tagRef.fields.name)
+      : [],
+    // Add other fields from item.fields as needed if they exist in Contentful
   }));
 }
 
-// Fetch a single blog post by slug
+// Fetch a single blog post by slug - UPDATED
 export async function getBlogPostBySlug(slug) {
   const entries = await client.getEntries({
     content_type: 'blogPost',
     'fields.slug': slug,
     limit: 1,
+    include: 2, // Crucial: Fetch linked entries (like Tags and embedded VideoEmbeds)
   });
   if (!entries.items.length) return null;
   const item = entries.items[0];
@@ -94,6 +104,11 @@ export async function getBlogPostBySlug(slug) {
     slug: item.fields.slug,
     date: item.fields.date,
     description: item.fields.description,
-    content: item.fields.content,
+    content: item.fields.content, // RichText content
+    // Process tags: map array of tag references to array of tag names
+    tags: item.fields.tags
+      ? item.fields.tags.map(tagRef => tagRef.fields.name)
+      : [],
+    // Add other fields from item.fields as needed if they exist in Contentful
   };
 }
