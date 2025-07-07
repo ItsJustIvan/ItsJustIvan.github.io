@@ -1,62 +1,50 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SolutionsHero from "../components/SolutionsHero.astro";
-import ProblemBlock from "../components/ProblemBlock.astro";
+import ProblemBlock from "../components/ProblemBlock.astro"; // Assuming ProblemBlock handles the internal card layout and dual CTAs
 import ContactCTA from "../components/ContactCTA.astro";
 
+// Revised problemData to focus on the 3 core solutions matching homepage categories.
+// Each entry includes a pain point, a quick Fiverr fix, and a comprehensive solution.
 const problemData = [
   {
+    // Aligns with 'CRO' solution on homepage
     problem: "Your website traffic isn't converting into leads or sales. You're getting visitors, but they're not signing up, buying, or inquiring. You know you're leaving money on the table.",
     fiverrGigName: "Website Conversion Audit",
-    fiverrGigLink: "YOUR_FIVERR_GIG_1_URL_HERE",
+    fiverrGigLink: "YOUR_FIVERR_GIG_1_URL_HERE", // REMINDER: Replace with your actual Fiverr URL for Website Conversion Audit
     comprehensiveSolutionTitle: "Full-Funnel CRO Strategy & Implementation",
-    comprehensiveSolutionLink: "#contact-section",
+    comprehensiveSolutionLink: "/solutions/cro-strategy", // Link to dedicated deep-dive page for CRO
   },
   {
-    problem: "Your marketing data is confusing, or you're unsure if it's accurate. You have Google Analytics, but you're unsure if it's set up correctly, or how to use the data to make smart decisions.",
-    fiverrGigName: "GA4 & Tag Manager Setup",
-    fiverrGigLink: "YOUR_FIVERR_GIG_3_URL_HERE",
-    comprehensiveSolutionTitle: "Advanced Marketing Analytics & Performance Consulting",
-    comprehensiveSolutionLink: "#contact-section",
+    // Aligns with 'Automation' solution on homepage (combining analytics & workflow automation)
+    problem: "Your marketing data is confusing, or your campaigns are clunky and not nurturing leads effectively. You need reliable insights and automated workflows to scale efficiently.",
+    fiverrGigName: "GA4 & Tag Manager Setup", // Fiverr gig for foundational data/tracking automation
+    fiverrGigLink: "YOUR_FIVERR_GIG_3_URL_HERE", // REMINDER: Replace with your actual Fiverr URL for GA4 & Tag Manager Setup
+    comprehensiveSolutionTitle: "Marketing Automation & Analytics Orchestration",
+    comprehensiveSolutionLink: "/solutions/marketing-automation", // Link to dedicated deep-dive page for Automation
   },
   {
-    problem: "Your landing pages are underperforming. You're running ads, but your landing pages aren't turning clicks into leads or sales. Your campaign ROI is suffering.",
-    fiverrGigName: "Landing Page Optimization",
-    fiverrGigLink: "YOUR_FIVERR_GIG_2_URL_HERE",
-    comprehensiveSolutionTitle: "End-to-End Campaign Optimization & Funnel Design",
-    comprehensiveSolutionLink: "#contact-section",
-  },
-  {
-    problem: "Your email marketing campaigns are clunky or not nurturing leads effectively. You need automation, segmentation, and compelling copy to drive engagement and sales.",
-    fiverrGigName: "Email Template/Audit (If applicable, or leave blank)",
-    fiverrGigLink: "",
-    comprehensiveSolutionTitle: "Email Marketing Workflow & Automation Strategy",
-    comprehensiveSolutionLink: "#contact-section",
-  },
-  {
-    problem: "You need a clear, actionable marketing roadmap for your B2B SaaS business. You're looking for a cohesive strategy to acquire, engage, and retain customers for scalable growth.",
-    fiverrGigName: "",
-    fiverrGigLink: "",
-    comprehensiveSolutionTitle: "B2B SaaS Marketing Strategy & Growth Consulting",
-    comprehensiveSolutionLink: "#contact-section",
-  },
-  {
-    problem: "You want to leverage AI and automation for smarter, more efficient marketing campaigns. You're keen to use cutting-edge tools to streamline workflows and boost performance.",
-    fiverrGigName: "",
-    fiverrGigLink: "",
-    comprehensiveSolutionTitle: "AI-Driven Campaign Optimization",
-    comprehensiveSolutionLink: "#contact-section",
+    // Aligns with 'Startup Buildouts' solution on homepage
+    problem: "You're launching a new venture or scaling rapidly, but need a proven roadmap for digital marketing, conversion, and sustainable growth from day one.",
+    fiverrGigName: "Landing Page Optimization", // Fiverr gig for a critical early-stage deliverable for startups
+    fiverrGigLink: "YOUR_FIVERR_GIG_2_URL_HERE", // REMINDER: Replace with your actual Fiverr URL for Landing Page Optimization
+    comprehensiveSolutionTitle: "End-to-End Startup Launch & Growth Strategy",
+    comprehensiveSolutionLink: "/solutions/startup-buildouts", // Link to dedicated deep-dive page for Startups
   },
 ];
 ---
 
-<BaseLayout title="Your Problem, My Solution" description="Discover how I solve critical marketing challenges for B2B SaaS & eCommerce brands.">
+<BaseLayout title="Your Problems, My Solutions" description="Discover how I solve critical marketing challenges for B2B SaaS, B2B, and eCommerce brands, from quick fixes to comprehensive strategies.">
   <main>
+    {/* SolutionsHero: This component should provide an engaging header and introductory message for the page */}
     <SolutionsHero />
 
-    <section id="problem-solver-section" class="py-16 md:py-24 bg-lightbg"> {/* Changed bg-gray-50 to bg-lightbg */}
+    <section id="problem-solver-section" class="py-16 md:py-24 bg-lightbg">
       <div class="container mx-auto px-4 max-w-6xl text-center">
-        <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-12">Your Challenges, Solved.</h2> {/* Changed text-gray-900 to text-primary */}
+        {/* Adjusted headline for stronger tone and clarity */}
+        <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-12">Your Challenges, Solved. Your Growth, Amplified.</h2>
+        
+        {/* This grid will now explicitly display 3 cards, matching your homepage categories */}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {problemData.map((data) => (
             <ProblemBlock
@@ -65,11 +53,16 @@ const problemData = [
               fiverrGigLink={data.fiverrGigLink}
               comprehensiveSolutionTitle={data.comprehensiveSolutionTitle}
               comprehensiveSolutionLink={data.comprehensiveSolutionLink}
+              // Assuming ProblemBlock is designed to handle the internal structure,
+              // strong CTAs, and distinct Fiverr vs. Comprehensive paths based on these props.
+              // If ProblemBlock needs additional props for urgency/authority, you can add them here.
             />
           ))}
         </div>
       </div>
     </section>
+    
+    {/* ContactCTA: This component should provide a clear, strong overall call-to-action to contact you */}
     <ContactCTA />
   </main>
 </BaseLayout>

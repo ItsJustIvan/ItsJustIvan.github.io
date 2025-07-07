@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+import RelatedSolutionsCarousel from "../../components/RelatedSolutionsCarousel.astro"; // Import the new component
+
+const title = "End-to-End Startup Launch & Growth Strategy";
+const description = "From MVP to scale, get a comprehensive marketing roadmap and execution strategy tailored for rapid startup growth in B2B SaaS & eCommerce.";
+
+// Define all solution data here to easily filter for related ones
+const allSolutions = [
+  {
+    title: "Full-Funnel CRO Strategy & Implementation",
+    description: "Optimize every stage of your customer journey to boost conversion rates and maximize revenue.",
+    link: "/solutions/cro-strategy",
+    id: "cro-strategy"
+  },
+  {
+    title: "Marketing Automation & Analytics Orchestration",
+    description: "Unlock scalable growth by streamlining marketing workflows and leveraging data for smarter decisions.",
+    link: "/solutions/marketing-automation",
+    id: "marketing-automation"
+  },
+  {
+    title: "End-to-End Startup Launch & Growth Strategy",
+    description: "From MVP to scale, get a comprehensive marketing roadmap and execution strategy tailored for rapid startup growth.",
+    link: "/solutions/startup-buildouts",
+    id: "startup-buildouts"
+  }
+];
+
+// Filter to get only related solutions (excluding the current page's solution)
+const currentPageId = "startup-buildouts";
+const relatedSolutions = allSolutions.filter(
+  (solution) => solution.id !== currentPageId
+);
+---
+
+<BaseLayout title={title} description={description}>
+  <main class="container mx-auto px-4 py-16 max-w-4xl">
+    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 text-center">
+      {title}
+    </h1>
+    <p class="text-lg text-dark mb-8 text-center">
+      Launching a startup is exhilarating, but marketing early-stage ventures requires a unique blend of agility and strategic foresight. I help B2B SaaS and eCommerce startups build robust marketing foundations from scratch, focusing on user acquisition, rapid experimentation, and sustainable growth models that scale as you do.
+    </p>
+
+    <div class="bg-lightbg p-6 rounded-lg shadow-md mb-8">
+      <h2 class="text-2xl font-bold text-primary mb-4">What This Solution Offers:</h2>
+      <ul class="list-disc list-inside text-dark text-lg space-y-2">
+        <li>Go-to-market (GTM) strategy development.</li>
+        <li>Minimum Viable Product (MVP) marketing and testing.</li>
+        <li>Foundational marketing tech stack setup.</li>
+        <li>Early-stage user acquisition funnels.</li>
+        <li>Rapid experimentation frameworks for growth.</li>
+        <li>AI-driven campaign automation and optimization.</li>
+      </ul>
+    </div>
+
+    <p class="text-xl text-dark mb-12 text-center">
+      Ready to build a strong marketing foundation for your startup?
+    </p>
+
+    <div class="text-center mb-16"> {/* Added mb-16 for spacing before carousel */}
+      <button
+        type="button"
+        data-modal-target="contactModal"
+        class="inline-block bg-accent text-primary px-8 py-4 rounded-md hover:bg-accent-alt transition-colors duration-300 text-lg font-semibold"
+      >
+        Let's Grow Your Startup &rarr;
+      </button>
+    </div>
+  </main>
+
+  <RelatedSolutionsCarousel relatedSolutions={relatedSolutions} /> {/* Place the carousel here */}
+
+  <ContactCTA />
+</BaseLayout>

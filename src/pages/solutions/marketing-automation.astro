@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactCTA from "../../components/ContactCTA.astro";
+import RelatedSolutionsCarousel from "../../components/RelatedSolutionsCarousel.astro"; // Import the new component
+
+const title = "Marketing Automation & Analytics Orchestration";
+const description = "Unlock scalable growth by streamlining your marketing workflows and leveraging data for smarter decisions across your B2B SaaS & eCommerce operations.";
+
+// Define all solution data here to easily filter for related ones
+const allSolutions = [
+  {
+    title: "Full-Funnel CRO Strategy & Implementation",
+    description: "Optimize every stage of your customer journey to boost conversion rates and maximize revenue.",
+    link: "/solutions/cro-strategy",
+    id: "cro-strategy"
+  },
+  {
+    title: "Marketing Automation & Analytics Orchestration",
+    description: "Unlock scalable growth by streamlining marketing workflows and leveraging data for smarter decisions.",
+    link: "/solutions/marketing-automation",
+    id: "marketing-automation"
+  },
+  {
+    title: "End-to-End Startup Launch & Growth Strategy",
+    description: "From MVP to scale, get a comprehensive marketing roadmap and execution strategy tailored for rapid startup growth.",
+    link: "/solutions/startup-buildouts",
+    id: "startup-buildouts"
+  }
+];
+
+// Filter to get only related solutions (excluding the current page's solution)
+const currentPageId = "marketing-automation";
+const relatedSolutions = allSolutions.filter(
+  (solution) => solution.id !== currentPageId
+);
+---
+
+<BaseLayout title={title} description={description}>
+  <main class="container mx-auto px-4 py-16 max-w-4xl">
+    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 text-center">
+      {title}
+    </h1>
+    <p class="text-lg text-dark mb-8 text-center">
+      Stop repetitive tasks and start scaling. This solution is about building intelligent marketing systems that work for you 24/7. From setting up robust analytics to orchestrating multi-channel campaigns, I ensure your technology and data work in harmony to drive predictable, measurable growth.
+    </p>
+
+    <div class="bg-lightbg p-6 rounded-lg shadow-md mb-8">
+      <h2 class="text-2xl font-bold text-primary mb-4">What This Solution Offers:</h2>
+      <ul class="list-disc list-inside text-dark text-lg space-y-2">
+        <li>Marketing automation platform setup and optimization (e.g., HubSpot, Marketo).</li>
+        <li>Advanced GA4 implementation and custom reporting.</li>
+        <li>Lead nurturing workflow design and implementation.</li>
+        <li>Customer journey mapping and automation.</li>
+        <li>AI-driven campaign automation and optimization.</li>
+      </ul>
+    </div>
+
+    <p class="text-xl text-dark mb-12 text-center">
+      Ready to automate your way to smarter marketing?
+    </p>
+
+    <div class="text-center mb-16"> {/* Added mb-16 for spacing before carousel */}
+      <button
+        type="button"
+        data-modal-target="contactModal"
+        class="inline-block bg-accent text-primary px-8 py-4 rounded-md hover:bg-accent-alt transition-colors duration-300 text-lg font-semibold"
+      >
+        Discuss Automation & Analytics &rarr;
+      </button>
+    </div>
+  </main>
+
+  <RelatedSolutionsCarousel relatedSolutions={relatedSolutions} /> {/* Place the carousel here */}
+
+  <ContactCTA />
+</BaseLayout>
