@@ -1,0 +1,48 @@
+---
+interface SolutionCard {
+  title: string;
+  description: string;
+  link: string;
+}
+
+interface Props {
+  // Solutions to display in the carousel (all except the current page's solution)
+  relatedSolutions: SolutionCard[];
+}
+
+const { relatedSolutions } = Astro.props;
+---
+
+{relatedSolutions && relatedSolutions.length > 0 && (
+  <section class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl md:text-4xl font-bold text-primary mb-10 text-center">
+      Explore Other Solutions
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+      {relatedSolutions.map((solution) => (
+        <a href={solution.link} class="block"> {/* Make the entire card clickable */}
+          <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col h-full">
+            <h3 class="text-xl font-bold text-primary mb-3 leading-snug">
+              {solution.title}
+            </h3>
+            <p class="text-dark text-base mb-6 flex-grow">
+              {solution.description}
+            </p>
+            <div class="mt-auto pt-4 border-t border-secondary/30">
+              <span class="inline-block text-center bg-primary text-white px-5 py-2 rounded-md hover:bg-dark transition-colors duration-300 text-sm font-semibold">
+                Learn More &rarr;
+              </span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    {/* Note: This is a simplified grid layout for "carousel" effect with 2 items.
+        For a true, interactive carousel (with swiping, pagination dots etc.),
+        you'd typically integrate a JavaScript library (like Swiper.js or Splide.js)
+        or build custom JS functionality. For V1, a responsive grid for 2 items
+        is often sufficient and simpler to implement. */}
+  </section>
+)}
