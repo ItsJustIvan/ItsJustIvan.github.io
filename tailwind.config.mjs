@@ -10,15 +10,15 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: '#2E2E59', // Deep Navy Indigo
+                primary: '#280D70', // Deep Indigo
                 secondary: '#9DA3C1', // Muted Steel Lavender
                 dark: '#3F4242', // Charcoal Gray
                 lightbg: '#F2F4F8', // Section background
-                accent: '#FF9472', // Warm coral
+                accent: '#8800FF', // Light Purple
                 'accent-alt': '#E6C36F', // Soft gold
             },
             boxShadow: {
-                accent: '0 2px 8px 0 #FF947233', // subtle accent shadow
+                accent: '0 2px 8px 0 #3F4242', // subtle accent shadow
             },
             fontFamily: {
                 heading: ['"Space Grotesk"', 'sans-serif'],
