@@ -1,22 +1,28 @@
 ---
 // FeaturedProjects.astro
 import { getCaseStudyPageData } from '../lib/contentful';
+
 const featured = (await getCaseStudyPageData()).filter(cs => cs.isFeatured).slice(0, 3);
 ---
+
 <section class="py-12">
-  <h2 class="text-2xl font-bold mb-6">Featured Projects</h2>
+  <h2 class="text-2xl font-bold mb-6 text-primary">Featured Projects</h2>
   <div class="grid md:grid-cols-3 gap-6">
     {featured.map(cs => (
-      <div class="bg-base-200 rounded-lg shadow p-5 flex flex-col">
-        {cs.mainImageUrl && cs.mainImageUrl.endsWith('.webm') ? (
-          <video src={cs.mainImageUrl} class="rounded mb-4 h-40 object-cover" autoPlay loop muted playsInline />
-        ) : (
-          <img src={cs.mainImageUrl} alt={cs.title} class="rounded mb-4 h-40 object-cover" />
-        )}
-        <h3 class="font-semibold text-lg mb-2">{cs.title}</h3>
-        <p class="mb-4 text-sm text-gray-500">{cs.summary}</p>
-        <a href={`/projects/${cs.slug}`} class="btn bg-primary text-lightbg hover:bg-dark mt-auto">View Case Study</a>
-      </div>
+      <a href={`/projects/${cs.slug}`} class="block">
+        <div class="bg-base-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col h-full">
+          {cs.mainImageUrl && cs.mainImageUrl.endsWith('.webm') ? (
+            <video src={cs.mainImageUrl} class="rounded mb-4 h-40 object-cover w-full" autoPlay loop muted playsInline />
+          ) : (
+            <img src={cs.mainImageUrl} alt={cs.title} class="rounded mb-4 h-40 object-cover w-full" />
+          )}
+          <h3 class="font-semibold text-lg mb-2 text-primary">{cs.title}</h3>
+          <p class="mb-4 text-sm text-dark flex-grow">{cs.summary}</p>
+          <div class="mt-auto">
+            <span class="btn bg-primary text-lightbg hover:bg-dark w-full text-center">View Case Study</span>
+          </div>
+        </div>
+      </a>
     ))}
   </div>
 </section>
