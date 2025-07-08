@@ -31,8 +31,6 @@ const {
   </label>
 
   <input type="hidden" name="_subject" value="New Portfolio Inquiry" />
-  <input type="hidden" name="_redirect" value="https://itsjustivan.com/thank-you" />
-
   <button type="submit" class="btn btn-primary mt-4">{submitText}</button>
 
   <p id="formStatus" class="mt-4 text-center text-gray-700"></p>
@@ -49,13 +47,16 @@ const {
 
 <script is:inline>
   const form = document.getElementById('contactForm');
-  const formStatus = document.getElementById('formStatus'); // Ensure this element exists in the HTML
+  const formStatus = document.getElementById('formStatus');
+  const mailtoLink = document.querySelector('a[href^="mailto:"]'); // Select the mailto link
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const formData = new FormData(form);
     const formUrl = form.action;
+    const formName = 'Contact_Modal_Form'; // A consistent name for your form
+    let submissionStatus = 'failed'; // Default status for dataLayer
 
     formStatus.textContent = 'Sending message...';
     formStatus.className = 'mt-4 text-center block text-gray-700';
@@ -71,12 +72,30 @@ const {
       });
 
       if (response.ok) {
+        submissionStatus = 'success';
         formStatus.textContent = 'Message sent successfully!';
         formStatus.className = 'mt-4 text-center block text-green-600 font-semibold';
         form.reset();
 
+        // *** GTM DataLayer Push for SUCCESS ***
+        if (window.dataLayer) {
+          window.dataLayer.push({
+            event: 'form_submission', // Custom event name for GTM
+            formName: formName,
+            formStatus: submissionStatus,
+            formId: form.id, // Optional: useful for specific form IDs
+            // Add other non-PII parameters if needed, e.g., formSubject: formData.get('_subject'),
+          });
+        }
+        // *** END GTM DataLayer Push ***
+
+        // If your client-side redirect (`window.location.replace`) is failing
+        // due to Formspree's free tier + reCAPTCHA, you should remove this setTimeout.
+        // It will allow the user to stay on the modal and see the "Message sent successfully!" text.
+        // If you need a custom thank-you page after Formspree submission, you'd typically need
+        // Formspree's paid plans to use their server-side redirect feature.
         setTimeout(() => {
-          window.location.replace('/thank-you');
+           // window.location.replace('/thank-you'); // REMOVE OR COMMENT OUT THIS LINE IF IT'S NOT WORKING
         }, 1500);
 
       } else {
@@ -88,12 +107,52 @@ const {
         }
         formStatus.className = 'mt-4 text-center block text-red-600 font-semibold';
         form.querySelector('button[type="submit"]').disabled = false;
+
+        // *** GTM DataLayer Push for FAILURE (API Error) ***
+        if (window.dataLayer) {
+          window.dataLayer.push({
+            event: 'form_submission',
+            formName: formName,
+            formStatus: submissionStatus, // Will be 'failed'
+            formId: form.id,
+            errorMessage: data["errors"] ? data["errors"].map(e => e.message).join(", ") : 'API Error'
+          });
+        }
+        // *** END GTM DataLayer Push ***
       }
     } catch (error) {
       formStatus.textContent = 'Oops! There was a network error.';
       formStatus.className = 'mt-4 text-center block text-red-600 font-semibold';
       form.querySelector('button[type="submit"]').disabled = false;
       console.error('Fetch error:', error);
+
+      // *** GTM DataLayer Push for FAILURE (Network Error) ***
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'form_submission',
+          formName: formName,
+          formStatus: submissionStatus, // Will be 'failed'
+          formId: form.id,
+          errorMessage: error.message || 'Network Error'
+        });
+      }
+      // *** END GTM DataLayer Push ***
     }
   });
+
+  // *** GTM DataLayer Push for Mailto Link Clicks ***
+  if (mailtoLink) {
+    mailtoLink.addEventListener('click', () => {
+      if (window.dataLayer) {
+        window.dataLayer.push({
+          event: 'email_click', // Custom event name for GTM
+          emailAddress: mailtoLink.href.replace('mailto:', ''),
+          location: 'Contact_Form_Modal_Direct_Email' // Contextual location
+        });
+      } else {
+        console.warn('dataLayer not found. GTM might not be loaded.');
+      }
+    });
+  }
+  // *** END GTM DataLayer Push ***
 </script>
