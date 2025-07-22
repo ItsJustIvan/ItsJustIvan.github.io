@@ -1,18 +1,46 @@
 ---
 // Hero.astro
+export interface Props {
+  heading: string
+  subheading?: string
+  primaryCta?: { label: string; href: string }
+  secondaryCta?: { label: string; href: string }
+  showModalButton?: boolean
+}
+
+const {
+  heading,
+  subheading,
+  primaryCta,
+  secondaryCta,
+  showModalButton = false,
+} = Astro.props;
 ---
-<section id="hero" class="d-flex flex-col justify-center items-center py-16 text-center bg-base-100">
+<section class="d-flex flex-col justify-center items-center py-16 text-center bg-base-100">
   <div class="hero-container" data-aos="fade-in">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">I build marketing systems that don’t waste your time — or your budget.</h1>
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">{heading}</h1>
+    {subheading && <p class="max-w-l text-base-content text-lg mt-4">{subheading}</p>}
+
     <div class="flex flex-col md:flex-row gap-4 justify-center mt-6">
-      <a href="/projects" class="btn bg-primary text-lightbg hover:bg-dark btn-lg">View Projects</a>
-        <button 
-    type="button" 
-    class="btn bg-primary text-lightbg hover:bg-dark btn-lg"
-    data-modal-target="contactModal"
-  >
-    Book a Consult
-  </button>
+      {primaryCta && (
+        <a href={primaryCta.href} class="btn bg-primary text-lightbg hover:bg-dark btn-lg">
+          {primaryCta.label}
+        </a>
+      )}
+      {secondaryCta && (
+        <a href={secondaryCta.href} class="btn btn-outline btn-lg">
+          {secondaryCta.label}
+        </a>
+      )}
+      {showModalButton && (
+        <button
+          type="button"
+          class="btn bg-primary text-lightbg hover:bg-dark btn-lg"
+          data-modal-target="contactModal"
+        >
+          Book a Consult
+        </button>
+      )}
     </div>
   </div>
 </section>
