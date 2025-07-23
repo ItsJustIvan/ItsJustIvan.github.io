@@ -1,0 +1,807 @@
+---
+// This is the frontmatter section of your Astro component.
+// You can add JavaScript here to fetch data, define props, etc.
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afterlife Tea And Boba Room - Vegan Cafe Las Vegas</title>
+    <!-- Google Fonts: Poppins for headings, Open Sans for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0V4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Afterlife Tea And Boba Room - Stylesheet (Inline) */
+
+        /* Basic CSS for mockup visualization */
+       body {
+            font-family: 'Open Sans', sans-serif; /* Updated body font */
+            margin: 0;
+            line-height: 1.6;
+            color: #222; /* Slightly softer black for text */
+            background-color: #f8f8f8; /* Slightly off-white background for warmth */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #000; /* Black for prominent header */
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+        }
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            padding: 5px 0; /* Add some padding for touch targets */
+        }
+        .logo img{
+            height: 100px; /* Fixed height for logo */
+            width: auto; /* Maintain aspect ratio */
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+            justify-content: center; /* Center nav items on wrap */
+        }
+        nav ul li {
+            margin-left: 20px;
+            margin-bottom: 5px; /* Spacing for wrapped items */
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            padding: 8px 0; /* Make touch target larger */
+            border-radius: 5px; /* Rounded corners */
+        }
+        nav ul li a:hover {
+            color: #056905; /* Dark green on hover */
+        }
+
+        /* Carousel Specific Styles */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            height: 500px; /* Fixed height for the carousel */
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            opacity: 0;
+            transition: opacity 1s ease-in-out; /* Smooth fade transition */
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6); /* Dark overlay for readability */
+            z-index: 0;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            max-width: 800px;
+            border-radius: 8px;
+        }
+
+        .slide-content h1 {
+            font-family: 'Poppins', sans-serif; /* Updated heading font */
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+
+        .slide-content p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .carousel-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            color: white;
+            border: none;
+            padding: 15px 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 8px; /* Rounded corners */
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-nav-btn.prev {
+            left: 10px;
+        }
+
+        .carousel-nav-btn.next {
+            right: 10px;
+        }
+
+        .carousel-pagination {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+        }
+
+        .pagination-dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .pagination-dot.active {
+            background-color: #056905; /* Dark green for active dot */
+            transform: scale(1.2);
+        }
+
+        /* Existing styles below */
+        .btn {
+            display: inline-block;
+            background-color: #056905; /* Dark green for buttons */
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px; /* More rounded corners */
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Subtle shadow */
+            margin: 5px; /* Spacing between buttons */
+        }
+        .btn:hover {
+            background-color: #034A03; /* Slightly darker green on hover */
+            transform: translateY(-2px); /* Lift effect */
+        }
+        .section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #056905; /* Dark green for section headings */
+        }
+        .about-snippet, .testimonial-snippet, .location-hours {
+            background-color: white;
+            padding: 40px;
+            margin-bottom: 20px;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* More pronounced shadow */
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .menu-item {
+            background-color: white;
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .menu-item:hover {
+            transform: translateY(-8px); /* More pronounced lift */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee; /* Subtle separator */
+        }
+        .menu-item-content {
+            padding: 20px;
+        }
+        .menu-item-content h3 {
+            margin-top: 0;
+            color: #056905; /* Dark green for menu item headings */
+        }
+        .events-snippet {
+            /* Parallax background for events section */
+            background-image: url('../../../public/clients/ALBoba/Event1.jpg'); /* Placeholder image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* This creates the parallax effect */
+            color: white; /* White text on dark green */
+            padding: 60px 20px; /* Increased padding to give more space for parallax */
+            border-radius: 10px; /* Rounded corners */
+            margin-top: 40px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            position: relative; /* Needed for pseudo-element overlay */
+            z-index: 1; /* Ensure content is above overlay */
+        }
+        .events-snippet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay for text readability */
+            border-radius: 10px; /* Match parent border-radius */
+            z-index: -1; /* Place behind content */
+        }
+        .events-snippet h2,
+        .events-snippet p,
+        .events-snippet .btn {
+            position: relative; /* Ensure these elements are above the overlay */
+            z-index: 2;
+        }
+        .events-snippet .calendar-embed-container {
+            position: relative;
+            padding-bottom: 75%; /* 4:3 aspect ratio (height/width * 100) */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: white; /* Background for the iframe */
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .events-snippet .calendar-embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .email-capture-section {
+            background-color: #056905; /* Orchid background for email capture */
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 40px auto;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            max-width: 800px; /* Constrain width for better readability */
+        }
+        .email-capture-section h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: white; /* White heading on orchid background */
+        }
+        .email-capture-section p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .email-capture-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .email-capture-form input[type="email"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+        .email-capture-form input[type="email"]:focus {
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 3px rgba(255,255,255,0.5); /* White glow on focus */
+        }
+        .email-capture-form .btn {
+            width: 100%;
+            max-width: 200px; /* Limit button width */
+            background-color: #000; /* Black button on orchid background */
+            color: white;
+        }
+        .email-capture-form .btn:hover {
+            background-color: #222; /* Slightly lighter black on hover */
+        }
+        footer {
+            background-color: #000; /* Black for prominent footer */
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 50px;
+            border-top-left-radius: 10px; /* Rounded top corners for footer */
+            border-top-right-radius: 10px;
+        }
+        footer .container {
+            padding-top: 0; /* Adjust padding for footer content */
+        }
+        footer .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        footer .footer-col {
+            flex-basis: 30%;
+            min-width: 250px;
+            margin-bottom: 20px;
+            padding: 10px; /* Add padding to columns */
+        }
+        footer .footer-col h3 {
+            color: #056905; /* Dark green for footer headings */
+            margin-bottom: 15px;
+        }
+        footer .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        footer .footer-col ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+        footer .footer-col ul li a:hover {
+            color: #056905; /* Dark green on hover */
+        }
+        footer .social-icons a {
+            color: white;
+            font-size: 1.5em;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer .social-icons a:hover {
+            color: #056905; /* Dark green on hover */
+        }
+        /* Map Embed Container */
+        .map-embed-container {
+            position: relative;
+            padding-bottom: 50%; /* Adjusted to 50% for smaller height */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #eee;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .map-embed-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        /* Basic Responsiveness */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+            }
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav ul li {
+                margin: 0 10px 10px;
+            }
+            .hero {
+                height: 400px; /* Adjust hero height for tablets */
+            }
+            .hero h1 {
+                font-size: 2.2em; /* Smaller font for mobile */
+            }
+            .hero p {
+                font-size: 0.9em; /* Smaller font for mobile */
+            }
+            .section h2 {
+                font-size: 1.8em;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            footer .footer-col {
+                flex-basis: 90%;
+            }
+            .events-snippet .calendar-embed-container {
+                padding-bottom: 100%; /* Make it more square on smaller screens */
+            }
+            .map-embed-container {
+                padding-bottom: 100%; /* Make it more square on smaller screens */
+            }
+        }
+        @media (max-width: 480px) {
+            .hero {
+                padding: 60px 15px;
+                height: 350px; /* Further adjust hero height for small mobiles */
+            }
+            .hero h1 {
+                font-size: 1.8em;
+            }
+            .hero p {
+                font-size: 0.8em;
+            }
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .section {
+                padding: 40px 15px;
+            }
+            .section h2 {
+                font-size: 1.5em;
+            }
+            .about-snippet, .testimonial-snippet, .location-hours, .events-snippet {
+                padding: 30px;
+            }
+            .menu-item-content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <!-- Logo link now opens email -->
+            <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="logo">
+                <img src="/clients/ALBoba/Logo.png" alt="Afterlife Tea And Boba Room">
+            </a>
+            <nav>
+                <ul>
+                    <!-- All navigation links now open email -->
+                    <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">Home</a></li>
+                    <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">About Us</a></li>
+                    <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">Menu</a></li>
+                    <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">Community & Events</a></li>
+                    <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">Gallery</a></li>
+                    <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <!-- Carousel slides with corrected image paths -->
+            <div class="carousel-slide active" style="background-image: url('/clients/ALBoba/Carousel1.jpg');">
+                <div class="slide-content">
+                    <h1>WOMEN-OWNED VEGAN CAFE</h1>
+                    <p>Experience plant-based delights crafted with passion.</p>
+                    <!-- CTA buttons now open email -->
+                    <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">Explore Our Menu</a>
+                    <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">See Our Events</a>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('/clients/ALBoba/Carousel2.jpg');">
+                <div class="slide-content">
+                    <h1>AFTERLIFE TEA AND BOBA ROOM</h1>
+                    <p>Your destination for delicious boba, coffee, and community.</p>
+                    <!-- CTA buttons now open email -->
+                    <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">Discover Our Drinks</a>
+                    <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">Our Story</a>
+                </div>
+            </div>
+            <div class="carousel-slide" style="background-image: url('/clients/ALBoba/Carousel3.jpg');">
+                <div class="slide-content">
+                    <h1>Sip into Serenity. Plant-Based Perfection.</h1>
+                    <p>Las Vegas's premier vegan cafe, serving delicious boba, coffee, and community spirit.</p>
+                    <!-- CTA buttons now open email -->
+                    <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">View All Offerings</a>
+                    <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">Visit Us</a>
+                </div>
+            </div>
+
+            <button class="carousel-nav-btn prev" aria-label="Previous Slide">&#10094;</button>
+            <button class="carousel-nav-btn next" aria-label="Next Slide">&#10095;</button>
+
+            <div class="carousel-pagination">
+                <!-- Dots will be generated by JavaScript -->
+            </div>
+        </section>
+
+        <section class="section about-snippet">
+            <div class="container">
+                <h2>Our Story</h2>
+                <p>Afterlife Tea And Boba Room is a women and LGBTQ-owned oasis in Las Vegas, dedicated to crafting 100% plant-based delights. We're more than just a cafe; we're a community hub where delicious drinks meet art, culture, and connection.</p>
+                <!-- Button now opens email -->
+                <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">Learn More About Us</a>
+            </div>
+        </section>
+
+        <section class="section menu-preview">
+            <div class="container">
+                <h2>Taste the Afterlife Experience</h2>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="/clients/ALBoba/Taste1.jpg" alt="Delicious Boba Tea">
+                        <div class="menu-item-content">
+                            <h3>Signature Boba Teas</h3>
+                            <p>Chewy pearls, creamy plant-based milks, and unique flavors. Your perfect customizable sip awaits.</p>
+                            <!-- Button now opens email -->
+                            <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">View Boba Menu</a>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="/clients/ALBoba/Taste2.jpg" alt="Vegan Coffee Drink">
+                        <div class="menu-item-content">
+                            <h3>Artisan Vegan Coffee</h3>
+                            <p>Carefully selected, aromatic beans with all your favorite plant-based milks. Hot or iced.</p>
+                            <!-- Button now opens email -->
+                            <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">View Coffee Menu</a>
+                        </div>
+                    </div>
+                    <div class="menu-item">
+                        <img src="/clients/ALBoba/Taste3.jpg" alt="Refreshing Vegan Drink">
+                        <div class="menu-item-content">
+                            <h3>Refreshing Vegan Drinks</h3>
+                            <p>Fruit teas, smoothies, and other unique plant-based beverages for every palate.</p>
+                            <!-- Button now opens email -->
+                            <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">View All Drinks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+       <section class="section events-snippet">
+            <div class="container">
+                <h2>Upcoming Community Events</h2>
+                <p>Join us for Mahjong Mondays, Artist Nook showcases, and more!</p>
+                <div class="calendar-embed-container">
+                    <!-- Google Calendar Embed - Updated -->
+                    <iframe src="https://calendar.google.com/calendar/embed?src=ba3b61f96a0c3dfeef31b065ced1e4f3ea54a5b41464dba4004b27f7b91c4937%40group.calendar.google.com&ctz=America%2FLos_Angeles" style="border:0;" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+                </div>
+                <!-- Hide the static event list now that we have the live calendar -->
+                <ul class="event-list" style="display: none;">
+                    <li>
+                        <span class="date">Jul 25</span>
+                        <span class="title">Mahjong Mondays</span>
+                        <!-- Button now opens email -->
+                        <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn" style="padding: 5px 10px; font-size: 0.9em;">Details</a>
+                    </li>
+                    <li>
+                        <span class="date">Aug 01</span>
+                        <span class="title">Artist Nook Showcase</span>
+                        <!-- Button now opens email -->
+                        <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn" style="padding: 5px 10px; font-size: 0.9em;">Details</a>
+                    </li>
+                    <li>
+                        <span class="date">Aug 10</span>
+                        <span class="title">SNAPIQS Meeting</span>
+                        <!-- Button now opens email -->
+                        <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn" style="padding: 5px 10px; font-size: 0.9em;">Details</a>
+                    </li>
+                    <li>
+                        <span class="date">Aug 15</span>
+                        <span class="title">Open Mic Night</span>
+                        <!-- Button now opens email -->
+                        <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn" style="padding: 5px 10px; font-size: 0.9em;">Details</a>
+                    </li>
+                </ul>
+                <!-- Button now opens email -->
+                <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn" style="margin-top: 30px;">View All Events</a>
+            </div>
+        </section>
+        <section class="email-capture-section">
+            <div class="container">
+                <h2>Stay Connected!</h2>
+                <p>Sign up for our newsletter to receive updates on new flavors, special offers, and exciting community events!</p>
+                <form class="email-capture-form" action="mailto:ItsJustIvanYip@gmail.com" method="post" enctype="text/plain">
+                    <input type="hidden" name="subject" value="Afterlife Boba Website Discussion - Newsletter Signup">
+                    <input type="email" name="email" placeholder="Enter your email address" required aria-label="Enter your email address">
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="section testimonial-snippet">
+            <div class="container">
+                <h2>What Our Customers Say</h2>
+                <blockquote>
+                    "The boba here is incredible, and the vibe is so welcoming! I love that everything is vegan. Reina and Tiara are amazing!"
+                    <cite>- A Happy Customer</cite>
+                </blockquote>
+                <!-- Button now opens email -->
+                <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn">Read More Testimonials</a>
+            </div>
+        </section>
+
+        <section class="section location-hours">
+            <div class="container">
+                <h2>Visit Us</h2>
+                <p><strong><i class="fas fa-map-marker-alt"></i> Address:</strong> 4568 Spring Mountain Rd #10, Las Vegas, NV 89102</p>
+                <p><strong><i class="fas fa-phone"></i> Phone:</strong> (725) 204-1990</p>
+                <p><strong><i class="fas fa-envelope"></i> Email:</strong> afterlifeteaandboba@gmail.com</p>
+                <p><strong><i class="fas fa-clock"></i> Hours:</strong></p>
+                <ul>
+                    <li>Monday - Friday: 12 PM - 8 PM</li>
+                    <li>Saturday: 12 PM - 9 PM</li>
+                    <li>Sunday: Closed</li>
+                </ul>
+                <!-- Google Map Embed - Updated and wrapped in responsive container -->
+                <div class="map-embed-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3222.6411740337408!2d-115.20564032361487!3d36.12659877244694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c8e7ef5b2201c5%3A0xd103c70ece9e52a2!2sAfterlife%20Tea%20And%20Boba%20Room!5e0!3m2!1sen!2sus!4v1753248576896!5m2!1sen!2sus" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <!-- Button now opens email -->
+                <a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion" class="btn" style="margin-top: 30px;">Get Directions / Contact Us</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <!-- Footer links now open email -->
+                        <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">About Us</a></li>
+                        <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">Menu</a></li>
+                        <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">Community & Events</a></li>
+                        <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">Gallery</a></li>
+                        <li><a href="mailto:ItsJustIvanYip@gmail.com?subject=Afterlife%20Boba%20Website%20Discussion">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <p>Stay updated with our latest news and events!</p>
+                    <div class="social-icons">
+                        <!-- Social icons using Font Awesome -->
+                        <a href="https://www.facebook.com/afterlifeteaandboba" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a> |
+                        <a href="https://www.instagram.com/afterlife.teaandboba/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a> |
+                        <a href="https://www.yelp.com/biz/afterlife-tea-and-boba-room-las-vegas" target="_blank" aria-label="Yelp"><i class="fab fa-yelp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Visit Us</h3>
+                    <p>4568 Spring Mountain Rd #10, <br>Las Vegas, NV 89102</p>
+                    <p><i class="fas fa-phone"></i> (725) 204-1990</p>
+                    <p><i class="fas fa-envelope"></i> afterlifeteaandboba@gmail.com</p>
+                </div>
+            </div>
+            <p>&copy; 2025 Afterlife Tea And Boba Room. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Client-side JavaScript for carousel functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dotsContainer = document.querySelector('.carousel-pagination');
+            const prevBtn = document.querySelector('.carousel-nav-btn.prev');
+            const nextBtn = document.querySelector('.carousel-nav-btn.next');
+            let currentSlide = 0;
+            let slideInterval;
+
+            // Function to show a specific slide
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    }
+                });
+                updateDots(index);
+            }
+
+            // Function to move to the next slide
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            // Function to move to the previous slide
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            // Function to create pagination dots
+            function createDots() {
+                slides.forEach((_, i) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('pagination-dot');
+                    dot.addEventListener('click', () => {
+                        currentSlide = i;
+                        showSlide(currentSlide);
+                        resetInterval();
+                    });
+                    dotsContainer.appendChild(dot);
+                });
+            }
+
+            // Function to update active dot
+            function updateDots(index) {
+                const dots = document.querySelectorAll('.pagination-dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.remove('active');
+                    if (i === index) {
+                        dot.classList.add('active');
+                    }
+                });
+            }
+
+            // Function to start auto-play
+            function startInterval() {
+                slideInterval = setInterval(nextSlide, 8000); // Change slide every 5 seconds
+            }
+
+            // Function to reset auto-play interval
+            function resetInterval() {
+                clearInterval(slideInterval);
+                startInterval();
+            }
+
+            // Event listeners for navigation buttons
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                resetInterval();
+            });
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                resetInterval();
+            });
+
+            // Initialize carousel
+            createDots();
+            showSlide(currentSlide);
+            startInterval(); // Start auto-play
+        });
+    </script>
+</body>
+</html>

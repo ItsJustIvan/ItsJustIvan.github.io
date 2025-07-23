@@ -1,0 +1,15 @@
+---
+interface Props {
+  label?: string;
+  href: string;
+  className?: string;
+}
+
+const { label = 'Download Resume', href, className = '' } = Astro.props;
+---
+
+<div class={`download-cta-container py-8 text-center ${className}`}>
+  <a href={href} class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
+    {label}
+  </a>
+</div>
