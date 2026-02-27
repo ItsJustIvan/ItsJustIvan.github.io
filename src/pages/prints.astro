@@ -1,0 +1,259 @@
+---
+// MTG 3D Prints - Project Landing Page
+// A clean, fantasy-inspired tool-oriented design
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom MTG 3D Prints | Master Your Boardstate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #c5a059; /* Muted Gold/Brass */
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-light: #e0e0e0;
+            --accent: #4a5568;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            color: var(--text-light);
+            background-color: var(--bg-dark);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://placehold.co/1200x800/222/444');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: #a0aec0;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: #000;
+            padding: 14px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: transform 0.2s, background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background-color: #d4b475;
+            transform: translateY(-2px);
+        }
+
+        /* --- About/Features Section --- */
+        .section {
+            padding: 100px 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .feature-img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            margin-top: 0;
+        }
+
+        .custom-options {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .custom-options li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-options i {
+            color: var(--primary);
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* --- Contact Form --- */
+        .contact-box {
+            background: var(--bg-card);
+            padding: 50px;
+            border-radius: 8px;
+            border-top: 4px solid var(--primary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: #2d2d2d;
+            border: 1px solid var(--accent);
+            color: white;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            height: 120px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #2d2d2d;
+            color: #718096;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content container">
+                <h1>Master Your Boardstate</h1>
+                <p>Custom 3D-printed tokens, counters, and tactical tools designed for the modern planeswalker.</p>
+                <a href="#contact" class="btn">Start a Custom Order</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section">
+            <div class="container">
+                <div class="about-grid">
+                    <img src="https://placehold.co/600x600/222/primary?text=Custom+Tokens" alt="3D Printed Tokens" class="feature-img" />
+                    <div class="about-text">
+                        <h2>Precision Crafted Tools</h2>
+                        <p>Ditch the dice and messy boardstates. I create durable, high-visibility accessories that make tracking your game effortless.</p>
+                        
+                        <ul class="custom-options">
+                            <li><i class="fas fa-palette"></i> <strong>Custom Colors:</strong> Match your deck's color identity.</li>
+                            <li><i class="fas fa-pen-nib"></i> <strong>Engraved Text:</strong> Custom labels on cases and token boxes.</li>
+                            <li><i class="fas fa-shield-alt"></i> <strong>Tabletop Ready:</strong> Designed to withstand heavy play and travel.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="contact-box">
+                    <h2 style="text-align: center;">Inquiry Form</h2>
+                    <p style="text-align: center; margin-bottom: 30px;">Tell me what you're looking for and let's build your kit.</p>
+                    
+                    <form action="https://formspree.io/f/your-id-here" method="POST">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" placeholder="Urza" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="planeswalker@magic.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Tool Type</label>
+                            <select name="type">
+                                <option value="tokens">Token Set</option>
+                                <option value="counters">+1/+1 Counters</option>
+                                <option value="cases">Custom Cases/Boxes</option>
+                                <option value="other">Full Custom Project</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Customization Details (Text, Colors, etc.)</label>
+                            <textarea name="message" placeholder="I need a set of 10 Soldier tokens in white, with 'Commander 2024' on the box..."></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ItsJustIvan  Project. Not affiliated with Wizards of the Coast.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
