@@ -1,0 +1,54 @@
+---
+interface Props {
+  problem: string;
+  fiverrGigName: string; // e.g., "Website Conversion Audit"
+  fiverrGigLink: string;
+  comprehensiveSolutionTitle: string;
+  comprehensiveSolutionLink: string;
+}
+
+const { problem, fiverrGigName, fiverrGigLink, comprehensiveSolutionTitle, comprehensiveSolutionLink } = Astro.props;
+---
+
+<div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col h-full">
+  {/* Hierarchical #1: Comprehensive Solution Title (most prominent) */}
+  <h3 class="text-2xl font-bold text-primary mb-3 leading-snug">
+    {comprehensiveSolutionTitle}
+  </h3>
+
+  {/* Hierarchical #2: Problem description - clearly states the challenge */}
+  <p class="text-dark text-base mb-6 flex-grow">
+    {problem}
+  </p>
+
+  {/* Buttons Section - Pushed to bottom with mt-auto for consistent alignment */}
+  <div class="mt-auto pt-4 border-t border-secondary/30 w-full">
+    {/* PRIMARY CTA: Learn More about Detailed Solution */}
+    <div class="mb-4">
+      <a
+        href={comprehensiveSolutionLink}
+        class="inline-block w-full text-center bg-primary text-white px-5 py-3 rounded-md hover:bg-dark transition-colors duration-300 text-base font-semibold"
+      >
+        Learn More About This Solution &rarr;
+      </a>
+    </div>
+
+    {/* SECONDARY CTA: Fiverr Quick Fix (conditionally displayed) */}
+    {fiverrGigLink && fiverrGigName ? (
+      <div class="mt-4"> {/* Maintains spacing from the primary button */}
+        <a
+          href={fiverrGigLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block w-full text-center bg-accent text-primary px-5 py-2 rounded-md hover:bg-accent-alt transition-colors duration-300 text-sm font-medium"
+        >
+          Get {fiverrGigName} Now &rarr; {/* Updated CTA copy to be more actionable */}
+        </a>
+      </div>
+    ) : (
+      <p class="text-sm text-secondary text-center mt-4"> {/* Maintains consistent spacing */}
+        (No quick-fix Fiverr gig directly associated, but we can still help!)
+      </p>
+    )}
+  </div>
+</div>

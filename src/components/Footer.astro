@@ -2,15 +2,50 @@
 const today = new Date();
 ---
 
-<footer class="footer footer-center block pt-10 bg-primary text-lightbg">
-  <div class="pb-2">
-<span class="text-xs opacity-50">
-    Need help building a portfolio like this? <a href="https://itsjustivan.com" target="_blank" class="font-bold underline text-accent">Hire me</a>
-    &copy; {today.getFullYear()} Ivan Yip
-    </span>
-    <!--No frameworks were harmed in the making of this site.-->
+{/* Removed 'block' from footer, letting 'footer-center' manage the display and centering. */}
+<footer class="footer footer-center bg-primary text-lightbg pt-8 pb-4">
+  {/* Main content area of the footer (the grid columns) */}
+  {/* Added w-full max-w-5xl to ensure the grid spans a defined width within the centered footer */}
+  <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-lightbg/20 w-full max-w-5xl">
+
+    {/* Column 1: Brand & Core Value */}
+    <div class="col-span-1 text-center md:text-left">
+      <p class="text-xl font-bold mb-2">Ivan Yip</p>
+      <p class="text-base font-semibold text-accent mb-4">I debug so you don't have to.</p>
+      <p class="text-sm opacity-75">Specialized strategies and hands-on execution for B2B SaaS & eCommerce brands.</p>
+    </div>
+
+    {/* Column 2: Key Navigation */}
+    <div class="col-span-1 text-center md:text-left">
+      <h3 class="font-bold text-lg mb-4">Explore</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/solutions" class="hover:underline opacity-75">Solutions</a></li>
+        <li><a href="/projects" class="hover:underline opacity-75">Projects</a></li>
+        <li><a href="/resume" class="hover:underline opacity-75">Resume</a></li>
+        <li><a href="/blog" class="hover:underline opacity-75">Blog</a></li>
+        {/* Consider adding: <li><a href="/privacy-policy" class="hover:underline opacity-75">Privacy Policy</a></li> */}
+      </ul>
+    </div>
+
+    {/* Column 3: Final Call to Action */}
+    <div class="col-span-1 text-center md:text-left flex flex-col items-center md:items-start">
+      {/* Added whitespace-nowrap to prevent "Ready to Transform?" from breaking into two lines easily */}
+      <h3 class="font-bold text-lg mb-4 whitespace-nowrap">Ready to Transform?</h3>
+      <button
+        type="button"
+        class="btn bg-accent text-primary hover:bg-accent-alt btn-md px-8 mb-4"
+        data-modal-target="contactModal"
+      >
+        Book a Consult
+      </button>
+      <p class="text-sm opacity-75">Need a quick fix? <a href="https://www.fiverr.com/s/8zEmj2q" target="_blank" rel="noopener noreferrer" class="font-bold underline text-accent">Hire me on Fiverr</a></p>
+    </div>
   </div>
-  <div class="inline opacity-75">
-  <span class="text-xs">I debug so you don’t have to.</span>    
+
+  {/* Bottom Bar: Copyright & Fun Tagline */}
+  {/* Removed 'text-center' here, as 'footer-center' on the parent 'footer' will handle it */}
+  <div class="text-xs opacity-50 pt-4 pb-4">
+    <p>&copy; {today.getFullYear()} Ivan Yip</p>
+    <p class="mt-1">No frameworks were harmed in the making of this site.</p>
   </div>
 </footer>

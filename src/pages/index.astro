@@ -14,7 +14,12 @@ import createSlug from "../lib/createSlug"
 ---
 
 <BaseLayout sideBarActiveItemID="home">
-  <Hero />
+  <Hero 
+  heading="I build marketing systems that don’t waste your time — or your budget."
+  primaryCta={{ label: "View Projects", href: "/projects" }}
+  showModalButton={true}
+/>
+
   <FeaturedProjects />
   <ServicesPreview />
   <MiniAbout />

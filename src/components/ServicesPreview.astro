@@ -2,22 +2,39 @@
 // ServicesPreview.astro
 ---
 <section class="py-12">
-  <h2 class="text-2xl font-bold mb-6">Services</h2>
+  <h2 class="text-2xl font-bold mb-6 text-primary">Solutions</h2>
   <div class="grid md:grid-cols-3 gap-6">
-    <div class="bg-base-200 rounded-lg shadow p-5 flex flex-col">
-      <h3 class="font-semibold text-lg mb-2">CRO</h3>
-      <p class="mb-4 text-sm text-gray-500">Conversion Rate Optimization for real business growth.</p>
-      <a href="/services" class="btn btn-outline mt-auto bg-secondary text-dark hover:bg-primary hover:text-lightbg border-none transition-colors">Learn More</a>
-    </div>
-    <div class="bg-base-200 rounded-lg shadow p-5 flex flex-col">
-      <h3 class="font-semibold text-lg mb-2">Automation</h3>
-      <p class="mb-4 text-sm text-gray-500">Automate your marketing and sales so you can scale.</p>
-      <a href="/services" class="btn btn-outline mt-auto bg-secondary text-dark hover:bg-primary hover:text-lightbg border-none transition-colors">Learn More</a>
-    </div>
-    <div class="bg-base-200 rounded-lg shadow p-5 flex flex-col">
-      <h3 class="font-semibold text-lg mb-2">Startup Buildouts</h3>
-      <p class="mb-4 text-sm text-gray-500">From MVP to launch, get your startup off the ground.</p>
-      <a href="/services" class="btn btn-outline mt-auto bg-secondary text-dark hover:bg-primary hover:text-lightbg border-none transition-colors">Learn More</a>
-    </div>
+    {/* CRO Card */}
+    <a href="/solutions/cro-strategy" class="block"> {/* Makes the entire card clickable */}
+      <div class="bg-base-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col h-full"> {/* Background color maintained */}
+        <h3 class="font-semibold text-lg mb-2 text-primary">CRO</h3>
+        <p class="mb-4 text-sm text-dark flex-grow">Conversion Rate Optimization for real business growth.</p>
+        <div class="mt-auto">
+          <span class="btn btn-outline w-full text-center bg-secondary text-dark hover:bg-primary hover:text-lightbg border-none transition-colors">Learn More</span>
+        </div>
+      </div>
+    </a>
+
+    {/* Automation Card */}
+    <a href="/solutions/marketing-automation" class="block"> {/* Makes the entire card clickable */}
+      <div class="bg-base-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col h-full"> {/* Background color maintained */}
+        <h3 class="font-semibold text-lg mb-2 text-primary">Automation</h3>
+        <p class="mb-4 text-sm text-dark flex-grow">Automate your marketing and sales so you can scale.</p>
+        <div class="mt-auto">
+          <span class="btn btn-outline w-full text-center bg-secondary text-dark hover:bg-primary hover:text-lightbg border-none transition-colors">Learn More</span>
+        </div>
+      </div>
+    </a>
+
+    {/* Startup Buildouts Card */}
+    <a href="/solutions/startup-buildouts" class="block"> {/* Makes the entire card clickable */}
+      <div class="bg-base-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6 flex flex-col h-full"> {/* Background color maintained */}
+        <h3 class="font-semibold text-lg mb-2 text-primary">Startup Buildouts</h3>
+        <p class="mb-4 text-sm text-dark flex-grow">From MVP to launch, get your startup off the ground.</p>
+        <div class="mt-auto">
+          <span class="btn btn-outline w-full text-center bg-secondary text-dark hover:bg-primary hover:text-lightbg border-none transition-colors">Learn More</span>
+        </div>
+      </div>
+    </a>
   </div>
 </section>

@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SolutionsHero from "../components/SolutionsHero.astro";
+import ProblemBlock from "../components/ProblemBlock.astro"; // Assuming ProblemBlock handles the internal card layout and dual CTAs
+import ContactCTA from "../components/ContactCTA.astro";
+
+// Revised problemData to focus on the 3 core solutions matching homepage categories.
+// Each entry includes a pain point, a quick Fiverr fix, and a comprehensive solution.
+const problemData = [
+  {
+    // Aligns with 'CRO' solution on homepage
+    problem: "Your website traffic isn't converting into leads or sales. You're getting visitors, but they're not signing up, buying, or inquiring. You know you're leaving money on the table.",
+    fiverrGigName: "Website Conversion Audit",
+    fiverrGigLink: "https://www.fiverr.com/s/8zEmj2q", // REMINDER: Replace with your actual Fiverr URL for Website Conversion Audit
+    comprehensiveSolutionTitle: "Full-Funnel CRO Strategy & Implementation",
+    comprehensiveSolutionLink: "/solutions/cro-strategy", // Link to dedicated deep-dive page for CRO
+  },
+  {
+    // Aligns with 'Automation' solution on homepage (combining analytics & workflow automation)
+    problem: "Your marketing data is confusing, or your campaigns are clunky and not nurturing leads effectively. You need reliable insights and automated workflows to scale efficiently.",
+    fiverrGigName: "GA4 & Tag Manager Setup", // Fiverr gig for foundational data/tracking automation
+    fiverrGigLink: "YOUR_FIVERR_GIG_3_URL_HERE", // REMINDER: Replace with your actual Fiverr URL for GA4 & Tag Manager Setup
+    comprehensiveSolutionTitle: "Marketing Automation & Analytics Orchestration",
+    comprehensiveSolutionLink: "/solutions/marketing-automation", // Link to dedicated deep-dive page for Automation
+  },
+  {
+    // Aligns with 'Startup Buildouts' solution on homepage
+    problem: "You're launching a new venture or scaling rapidly, but need a proven roadmap for digital marketing, conversion, and sustainable growth from day one.",
+    fiverrGigName: "Landing Page Optimization", // Fiverr gig for a critical early-stage deliverable for startups
+    fiverrGigLink: "YOUR_FIVERR_GIG_2_URL_HERE", // REMINDER: Replace with your actual Fiverr URL for Landing Page Optimization
+    comprehensiveSolutionTitle: "End-to-End Startup Launch & Growth Strategy",
+    comprehensiveSolutionLink: "/solutions/startup-buildouts", // Link to dedicated deep-dive page for Startups
+  },
+];
+---
+
+<BaseLayout title="Your Problems, My Solutions" description="Discover how I solve critical marketing challenges for B2B SaaS, B2B, and eCommerce brands, from quick fixes to comprehensive strategies.">
+  <main>
+    {/* SolutionsHero: This component should provide an engaging header and introductory message for the page */}
+    <SolutionsHero />
+
+    <section id="problem-solver-section" class="py-16 md:py-24 bg-lightbg">
+      <div class="container mx-auto px-4 max-w-6xl text-center">
+        {/* Adjusted headline for stronger tone and clarity */}
+        <h2 class="text-3xl sm:text-4xl font-bold text-primary mb-12">Your Challenges, Solved. Your Growth, Amplified.</h2>
+        
+        {/* This grid will now explicitly display 3 cards, matching your homepage categories */}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {problemData.map((data) => (
+            <ProblemBlock
+              problem={data.problem}
+              fiverrGigName={data.fiverrGigName}
+              fiverrGigLink={data.fiverrGigLink}
+              comprehensiveSolutionTitle={data.comprehensiveSolutionTitle}
+              comprehensiveSolutionLink={data.comprehensiveSolutionLink}
+              // Assuming ProblemBlock is designed to handle the internal structure,
+              // strong CTAs, and distinct Fiverr vs. Comprehensive paths based on these props.
+              // If ProblemBlock needs additional props for urgency/authority, you can add them here.
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+    
+    {/* ContactCTA: This component should provide a clear, strong overall call-to-action to contact you */}
+    <ContactCTA />
+  </main>
+</BaseLayout>
