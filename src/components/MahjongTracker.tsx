@@ -305,18 +305,25 @@ export default function MahjongTracker() {
             </div>
           </div>
           
-          {/* Main Actions */}
-          <div className="grid grid-cols-3 gap-2">
+{/* Main Actions - High Legibility & Clear Hierarchy */}
+          <div className="grid grid-cols-3 gap-3">
             <button 
               onClick={handleDeadHand} 
-              className={`col-span-1 py-4 rounded-2xl font-black text-[10px] uppercase border transition-all active:scale-95 ${theme.buttonGhost}`}
+              className={`col-span-1 py-5 rounded-2xl font-black text-[11px] uppercase tracking-tighter border-2 border-dashed transition-all active:scale-95 flex flex-col items-center justify-center gap-1
+                ${darkMode 
+                  ? 'bg-red-950/10 border-red-900/40 text-red-500/70 shadow-[0_0_15px_rgba(220,38,38,0.1)]' 
+                  : 'bg-red-50 border-red-200 text-red-600/60 shadow-[0_0_10px_rgba(220,38,38,0.05)]'
+                }`}
             >
-              Dead Hand
+              <span>🚫</span>
+              <span>Dead Hand</span>
             </button>
+            
             <button 
               onClick={handleTransaction} 
               disabled={winnerIdx === null || loserIdx === null || !pointsInput} 
-              className={`col-span-2 py-4 rounded-2xl font-black text-xs uppercase shadow-xl transition-all active:scale-95 disabled:opacity-20 ${theme.primaryBtn}`}
+              className={`col-span-2 py-5 rounded-2xl font-black text-lg uppercase shadow-2xl transition-all active:scale-95 disabled:opacity-10 disabled:grayscale
+                ${theme.primaryBtn} ${winnerIdx !== null && loserIdx !== null ? 'ring-4 ring-blue-500/30' : ''}`}
             >
               Record Score
             </button>
