@@ -4,12 +4,13 @@ import MahjongTracker from '../components/MahjongTracker';
 ---
 
 <ToolLayout title="Mahjong Tracker | itsjustivan">
-  <main class="w-full h-full p-4 flex flex-col">
+  <main class="w-full">
     <MahjongTracker client:load />
     
-    {/* Optional: A small "Back to Site" link if needed */}
-    <a href="/" class="text-xs text-slate-500 text-center mt-4 hover:underline">
-      ← Back to itsjustivan.com
-    </a>
+    <div class="py-12 flex justify-center">
+      <a href="/" class="text-xs text-slate-500 hover:underline">
+        ← Back to itsjustivan.com
+      </a>
+    </div>
   </main>
 </ToolLayout>
