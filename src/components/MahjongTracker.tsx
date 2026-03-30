@@ -166,20 +166,28 @@ export default function MahjongTracker() {
         })}
       </main>
 
-{/* 4. Footer with Point Value (1:3:1 Ratio) & Dead Hand */}
-      <footer className={`flex-none p-4 border-t bg-white dark:bg-zinc-900 ${theme.panel} z-40`}>
+{/* 4. Footer with Improved Status & Chevron */}
+      <footer className={`flex-none p-4 border-t bg-white dark:bg-zinc-900 ${theme.panel} z-40 shadow-[0_-10px_20px_rgba(0,0,0,0.05)]`}>
         <div className="max-w-lg mx-auto flex flex-col gap-3">
-          <div onClick={() => setShowControls(!showControls)} className="flex justify-between items-center px-1 cursor-pointer">
-            <label className={`text-[9px] font-black uppercase tracking-[0.2em] ${theme.textMuted}`}>Point Value</label>
-            {winnerIdx !== null && (
-              <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest animate-pulse">
-                {loserIdx === null ? "Who Discarded?" : "Ready"}
-              </span>
-            )}
+          
+          {/* Header Area with Label and Chevron */}
+          <div 
+            onClick={() => setShowControls(!showControls)} 
+            className="flex justify-between items-center px-1 cursor-pointer group"
+          >
+            <label className={`text-[9px] font-black uppercase tracking-[0.2em] ${theme.textMuted} group-hover:text-blue-500 transition-colors`}>
+              Point Value
+            </label>
+            
+            {/* The Interactive Chevron */}
+            <div className={`text-sm transition-transform duration-300 ${showControls ? 'rotate-180' : 'rotate-0'} ${theme.textMuted}`}>
+              ▲
+            </div>
           </div>
           
-          <div className={`overflow-hidden transition-all duration-500 ${showControls ? 'max-h-[500px] opacity-100 mb-2' : 'max-h-0 opacity-0 mb-0'}`}>
-            <div className="flex flex-col gap-3 pt-2">
+          {/* Collapsible Content */}
+          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${showControls ? 'max-h-[500px] opacity-100 mb-2' : 'max-h-0 opacity-0 mb-0'}`}>
+            <div className="flex flex-col gap-4 pt-2">
               
               {/* 1:3:1 RATIO STEPPER */}
               <div className="grid grid-cols-5 gap-2">
@@ -189,7 +197,6 @@ export default function MahjongTracker() {
                 >
                   -
                 </button>
-                
                 <input 
                   type="number" 
                   inputMode="numeric" 
@@ -197,7 +204,6 @@ export default function MahjongTracker() {
                   value={pointsInput} 
                   onChange={(e) => setPointsInput(e.target.value)} 
                 />
-                
                 <button 
                   onClick={() => setPointsInput(String(parseInt(pointsInput || '0') + 1))} 
                   className={`col-span-1 h-14 rounded-2xl flex items-center justify-center text-2xl font-black border-2 ${theme.settingRow} active:scale-90 transition-transform`}
@@ -206,27 +212,40 @@ export default function MahjongTracker() {
                 </button>
               </div>
 
-              <div className={`grid gap-2 ${playerCount <= 2 ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                {playerNames.map((name, i) => (
+              {/* Status & Player Selection Area */}
+              <div className="flex flex-col gap-2">
+                {/* Status moved here: Top-Left of the player buttons */}
+                {winnerIdx !== null && (
+                  <div className="px-1 text-left">
+                    <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest animate-in fade-in slide-in-from-left-2 duration-300">
+                      {loserIdx === null ? "Who Discarded?" : "Ready to Record"}
+                    </span>
+                  </div>
+                )}
+
+                <div className={`grid gap-2 ${playerCount <= 2 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                  {playerNames.map((name, i) => (
+                    <button 
+                      key={i} 
+                      disabled={winnerIdx === i} 
+                      onClick={() => setLoserIdx(i)} 
+                      className={`py-4 rounded-xl font-black border-2 text-[10px] uppercase transition-all active:scale-95 ${loserIdx === i ? 'bg-red-600 border-red-700 text-white shadow-lg' : `${theme.buttonGhost} disabled:opacity-5`}`}
+                    >
+                      {name}
+                    </button>
+                  ))}
                   <button 
-                    key={i} 
-                    disabled={winnerIdx === i} 
-                    onClick={() => setLoserIdx(i)} 
-                    className={`py-4 rounded-xl font-black border-2 text-[10px] uppercase transition-all active:scale-95 ${loserIdx === i ? 'bg-red-600 border-red-700 text-white shadow-lg' : `${theme.buttonGhost} disabled:opacity-5`}`}
+                    onClick={() => setLoserIdx('all')} 
+                    className={`col-span-full py-4 rounded-xl font-black uppercase text-[10px] tracking-widest transition-all active:scale-95 border ${loserIdx === 'all' ? 'bg-blue-600 border-blue-700 text-white shadow-lg' : `bg-transparent border-dashed ${darkMode ? 'border-zinc-700 text-zinc-500' : 'border-slate-300 text-slate-400'}`}`}
                   >
-                    {name}
+                    Self-picked (All Pay)
                   </button>
-                ))}
-                <button 
-                  onClick={() => setLoserIdx('all')} 
-                  className={`col-span-full py-4 rounded-xl font-black uppercase text-[10px] tracking-widest transition-all active:scale-95 border ${loserIdx === 'all' ? 'bg-blue-600 border-blue-700 text-white shadow-lg' : `bg-transparent border-dashed ${darkMode ? 'border-zinc-700 text-zinc-500' : 'border-slate-300 text-slate-400'}`}`}
-                >
-                  Self-picked (All Pay)
-                </button>
+                </div>
               </div>
             </div>
           </div>
           
+          {/* Main Actions */}
           <div className="grid grid-cols-3 gap-2">
             <button 
               onClick={handleDeadHand} 
@@ -245,84 +264,132 @@ export default function MahjongTracker() {
         </div>
       </footer>
 
-      {/* 5. Settings Modal */}
+{/* 5. Settings Modal */}
       {isSettingsOpen && (
         <div onClick={() => setIsSettingsOpen(false)} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
           <div onClick={(e) => e.stopPropagation()} className={`w-full max-w-sm rounded-[40px] p-8 shadow-2xl border-4 ${theme.modal} animate-in zoom-in-95 duration-200 overflow-y-auto max-h-[90vh]`}>
             
+            {/* Header with Dynamic Title and Back Button */}
             <div className="flex justify-between items-center mb-8 text-left">
               <div>
-                <h2 className="font-black text-2xl uppercase tracking-tighter leading-none">Settings</h2>
-                <div className={`h-1 w-8 rounded-full mt-1 bg-blue-600`} />
+                <button 
+                  onClick={() => settingsView === 'main' ? setIsSettingsOpen(false) : setSettingsView('main')}
+                  className="group flex flex-col"
+                >
+                  <h2 className="font-black text-2xl uppercase tracking-tighter leading-none flex items-center gap-2">
+                    {settingsView !== 'main' && <span className="text-blue-600 text-sm">←</span>}
+                    {settingsView === 'main' ? 'Settings' : settingsView === 'about-app' ? 'Mission' : 'The Dev'}
+                  </h2>
+                  <div className={`h-1 w-8 rounded-full mt-1 bg-blue-600 transition-all ${settingsView !== 'main' ? 'w-16' : 'w-8'}`} />
+                </button>
               </div>
               <button onClick={() => setIsSettingsOpen(false)} className="w-10 h-10 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-xl">✕</button>
             </div>
 
-            <div className="flex flex-col gap-6">
-              <button onClick={() => { if(confirm("Reset match?")) { setScores(Array(playerCount).fill(0)); setHistory([]); setDealerStreak(0); setIsSettingsOpen(false); }}} 
-                className="w-full py-4 rounded-2xl bg-red-600/10 text-red-600 font-black text-xs uppercase border border-red-600/20">Reset Match</button>
+            {/* View Switcher */}
+            {settingsView === 'main' ? (
+              /* MAIN SETTINGS VIEW */
+              <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+                <button onClick={() => { if(confirm("Reset match?")) { setScores(Array(playerCount).fill(0)); setHistory([]); setDealerStreak(0); setIsSettingsOpen(false); }}} 
+                  className="w-full py-4 rounded-2xl bg-red-600/10 text-red-600 font-black text-xs uppercase border border-red-600/20">Reset Match</button>
 
-              <div className={`flex flex-col gap-4 rounded-3xl p-4 border transition-all ${dealerPointsEnabled ? 'border-emerald-500/50 bg-emerald-500/5' : theme.settingRow}`}>
-                <div className="flex justify-between items-center">
-                  <span className="font-bold text-xs uppercase tracking-widest">Dealer Bonus</span>
-                  <button onClick={() => setDealerPointsEnabled(!dealerPointsEnabled)} className={`w-12 h-6 rounded-full relative transition-colors ${dealerPointsEnabled ? 'bg-emerald-600' : 'bg-zinc-300'}`}>
-                    <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${dealerPointsEnabled ? 'left-7' : 'left-1'}`} />
-                  </button>
-                </div>
-                {dealerPointsEnabled && (
-                  <div className="space-y-4 text-left">
-                    <div className="flex flex-col gap-1">
-                      <label className="text-[9px] font-black uppercase opacity-40">Base Points</label>
-                      <div className="flex items-center justify-between">
-                        <button onClick={() => setBaseDealerPoint(Math.max(0, baseDealerPoint - 1))} className="text-xl px-4 py-1 font-black text-emerald-600">-</button>
-                        <span className="text-lg font-black font-mono">{baseDealerPoint}</span>
-                        <button onClick={() => setBaseDealerPoint(baseDealerPoint + 1)} className="text-xl px-4 py-1 font-black text-emerald-600">+</button>
+                <div className={`flex flex-col gap-4 rounded-3xl p-4 border transition-all ${dealerPointsEnabled ? 'border-emerald-500/50 bg-emerald-500/5' : theme.settingRow}`}>
+                  <div className="flex justify-between items-center">
+                    <span className="font-bold text-xs uppercase tracking-widest">Dealer Bonus</span>
+                    <button onClick={() => setDealerPointsEnabled(!dealerPointsEnabled)} className={`w-12 h-6 rounded-full relative transition-colors ${dealerPointsEnabled ? 'bg-emerald-600' : 'bg-zinc-300'}`}>
+                      <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${dealerPointsEnabled ? 'left-7' : 'left-1'}`} />
+                    </button>
+                  </div>
+                  {dealerPointsEnabled && (
+                    <div className="space-y-4 text-left">
+                      <div className="flex flex-col gap-1">
+                        <label className="text-[9px] font-black uppercase opacity-40">Base Points</label>
+                        <div className="flex items-center justify-between">
+                          <button onClick={() => setBaseDealerPoint(Math.max(0, baseDealerPoint - 1))} className="text-xl px-4 py-1 font-black text-emerald-600">-</button>
+                          <span className="text-lg font-black font-mono">{baseDealerPoint}</span>
+                          <button onClick={() => setBaseDealerPoint(baseDealerPoint + 1)} className="text-xl px-4 py-1 font-black text-emerald-600">+</button>
+                        </div>
                       </div>
                     </div>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] font-black uppercase opacity-50 tracking-widest text-left">Round Wind</label>
+                  <div className={`flex items-center justify-between rounded-3xl p-1.5 border ${theme.settingRow}`}>
+                    <button onClick={() => setRoundWindIdx(prev => (prev - 1 + 4) % 4)} className={`w-10 h-10 rounded-2xl font-black text-xl ${theme.stepperBtn}`}>-</button>
+                    <span className="text-xl font-black">{WINDS[roundWindIdx].char}</span>
+                    <button onClick={() => setRoundWindIdx(prev => (prev + 1) % 4)} className={`w-10 h-10 rounded-2xl font-black text-xl ${theme.stepperBtn}`}>+</button>
                   </div>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-black uppercase opacity-50 tracking-widest text-left">Round Wind</label>
-                <div className={`flex items-center justify-between rounded-3xl p-1.5 border ${theme.settingRow}`}>
-                  <button onClick={() => setRoundWindIdx(prev => (prev - 1 + 4) % 4)} className={`w-10 h-10 rounded-2xl font-black text-xl ${theme.stepperBtn}`}>-</button>
-                  <span className="text-xl font-black">{WINDS[roundWindIdx].char}</span>
-                  <button onClick={() => setRoundWindIdx(prev => (prev + 1) % 4)} className={`w-10 h-10 rounded-2xl font-black text-xl ${theme.stepperBtn}`}>+</button>
                 </div>
-              </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-black uppercase opacity-50 tracking-widest text-left">Player Count</label>
-                <div className={`flex items-center justify-between rounded-3xl p-1.5 border ${theme.settingRow}`}>
-                  <button onClick={() => setPlayerCount(Math.max(1, playerCount - 1))} className={`w-10 h-10 rounded-2xl font-black text-xl ${theme.stepperBtn}`}>-</button>
-                  <span className="text-xl font-black font-mono">{playerCount}</span>
-                  <button onClick={() => setPlayerCount(Math.min(4, playerCount + 1))} className={`w-10 h-10 rounded-2xl font-black text-xl ${theme.stepperBtn}`}>+</button>
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] font-black uppercase opacity-50 tracking-widest text-left">Player Count</label>
+                  <div className={`flex items-center justify-between rounded-3xl p-1.5 border ${theme.settingRow}`}>
+                    <button onClick={() => setPlayerCount(Math.max(1, playerCount - 1))} className={`w-10 h-10 rounded-2xl font-black text-xl ${theme.stepperBtn}`}>-</button>
+                    <span className="text-xl font-black font-mono">{playerCount}</span>
+                    <button onClick={() => setPlayerCount(Math.min(4, playerCount + 1))} className={`w-10 h-10 rounded-2xl font-black text-xl ${theme.stepperBtn}`}>+</button>
+                  </div>
                 </div>
-              </div>
 
-              <button onClick={() => { rotateDealer(); setIsSettingsOpen(false); }} className={`w-full p-4 rounded-2xl flex justify-between items-center border ${theme.settingRow} font-bold text-xs uppercase tracking-widest`}>
-                <span>Rotate Seats</span>
-                <span>🔄</span>
-              </button>
-
-              <hr className="opacity-10" />
-
-              <div className="flex justify-between items-center px-2">
-                <span className="font-bold text-xs uppercase tracking-widest">Night Mode</span>
-                <button onClick={() => setDarkMode(!darkMode)} className={`w-12 h-6 rounded-full relative transition-colors ${darkMode ? 'bg-blue-600' : 'bg-zinc-300'}`}>
-                  <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${darkMode ? 'left-7' : 'left-1'}`} />
+                <button onClick={() => { rotateDealer(); setIsSettingsOpen(false); }} className={`w-full p-4 rounded-2xl flex justify-between items-center border ${theme.settingRow} font-bold text-xs uppercase tracking-widest`}>
+                  <span>Rotate Seats</span>
+                  <span>🔄</span>
                 </button>
-              </div>
 
-            <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-black uppercase opacity-50 tracking-widest text-left">About</label>
-            </div>
-              <div className="grid grid-cols-2 gap-2">
-                <button onClick={() => setSettingsView('about-app')} className={`p-3 rounded-2xl border ${theme.settingRow} font-bold text-[10px] uppercase`}>Mission Mahjong</button>
-                <button onClick={() => setSettingsView('about-ivan')} className={`p-3 rounded-2xl border ${theme.settingRow} font-bold text-[10px] uppercase`}>Ivan</button>
+                <hr className="opacity-10" />
+
+                <div className="flex justify-between items-center px-2">
+                  <span className="font-bold text-xs uppercase tracking-widest">Night Mode</span>
+                  <button onClick={() => setDarkMode(!darkMode)} className={`w-12 h-6 rounded-full relative transition-colors ${darkMode ? 'bg-blue-600' : 'bg-zinc-300'}`}>
+                    <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${darkMode ? 'left-7' : 'left-1'}`} />
+                  </button>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] font-black uppercase opacity-50 tracking-widest text-left">About</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button onClick={() => setSettingsView('about-app')} className={`p-3 rounded-2xl border ${theme.settingRow} font-bold text-[10px] uppercase`}>Mission</button>
+                    <button onClick={() => setSettingsView('about-ivan')} className={`p-3 rounded-2xl border ${theme.settingRow} font-bold text-[10px] uppercase`}>Ivan</button>
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : settingsView === 'about-app' ? (
+              /* MISSION VIEW */
+              <div className="flex flex-col gap-4 text-left animate-in slide-in-from-right-4 duration-300">
+                <p className="text-sm leading-relaxed opacity-80">
+                  Based in Las Vegas, Mission: Mahjong! fosters community connection by providing free, welcoming spaces to learn and play Chinese style mahjong.
+                </p>
+                <a 
+                    href="https://missionmahjong.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full py-2 bg-green-600 text-white rounded-2xl text-center font-black text-xs uppercase tracking-widest shadow-lg active:scale-95 transition-all mb-4"
+                  >
+                    Visit Website
+                  </a>
+
+                <button onClick={() => setSettingsView('main')} className="mt-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 font-bold text-[10px] uppercase">Back to Settings</button>
+              </div>
+            ) : (
+              /* IVAN VIEW */
+              <div className="flex flex-col gap-4 text-left animate-in slide-in-from-right-4 duration-300">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 mb-2 shadow-lg" />
+                <h3 className="font-black text-xl">Ivan</h3>
+                <p className="text-sm leading-relaxed opacity-80">
+                 Hi, I'm Ivan. I'm a developer and Mahjong enthusiast who loves building clean, accessible tools for niche communities. I built this tracker to make game night easier for families and groups everywhere.
+                </p>
+                <a 
+                    href="https://itsjustivan.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full py-4 bg-purple-500 text-white rounded-2xl text-center font-black text-xs uppercase tracking-widest shadow-lg active:scale-95 transition-all mb-4"
+                  >
+                    Check me out!
+                  </a>
+                <button onClick={() => setSettingsView('main')} className="mt-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 font-bold text-[10px] uppercase">Back to Settings</button>
+              </div>
+            )}
           </div>
         </div>
       )}
