@@ -1,6 +1,6 @@
 ---
 interface Props {
-	title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
@@ -8,24 +8,24 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en" class="bg-slate-950 text-slate-50">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Mahjong Points Tracker" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body class="h-screen w-screen overflow-hidden flex flex-col items-center justify-center">
-		{/* This slot will hold your MahjongTracker component */}
-		<slot />
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Mahjong Points Tracker" />
+        {/* viewport-fit=cover is great for notched phones, keep that! */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body class="min-h-screen flex flex-col items-center">
+        <slot />
+    </body>
 </html>
 
 <style is:global>
-  /* Prevents the "bounce" scroll effect on iOS */
-	html, body {
-		position: fixed;
-		overflow: hidden;
-	}
+  html, body {
+      margin: 0;
+      padding: 0;
+      overscroll-behavior-y: none; 
+  }
 </style>
